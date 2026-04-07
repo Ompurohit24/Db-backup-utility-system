@@ -1,0 +1,15 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+python-jose[cryptography]
+pydantic[email]
+appwrite
+bcrypt
+cryptography
+APScheduler
+
+# Database drivers
+pymysql
+psycopg2-binary
+pymongo
+
