@@ -9,6 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Optional
 
+from appwrite.exception import AppwriteException
 from appwrite.query import Query
 from appwrite.input_file import InputFile
 
@@ -895,3 +896,28 @@ async def _record_restore(
     except Exception:
         # Best-effort logging; do not block restore on logging failure
         return None
+
+
+async def list_all_restores(limit: int = 50, offset: int = 0) -> dict:
+    """List restore records across all users (admin use)."""
+    if not RESTORES_COLLECTION_ID:
+        return {"rows": [], "total": 0}
+
+    base_queries = [Query.limit(limit), Query.offset(offset)]
+    try:
+        response = await asyncio.to_thread(
+            tables.list_rows,
+            database_id=DATABASE_ID,
+            table_id=RESTORES_COLLECTION_ID,
+            queries=[*base_queries, Query.order_desc("created_at")],
+        )
+    except AppwriteException:
+        response = await asyncio.to_thread(
+            tables.list_rows,
+            database_id=DATABASE_ID,
+            table_id=RESTORES_COLLECTION_ID,
+            queries=base_queries,
+        )
+
+    return normalize_row_collection(response)
+

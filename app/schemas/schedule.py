@@ -66,8 +66,8 @@ class ScheduleOut(BaseModel):
     enabled: bool
     description: Optional[str] = None
     next_run_time: Optional[datetime] = None
-    created_at: Optional[datetime] = None
-    updated_at: Optional[datetime] = None
+    createdAt: Optional[datetime] = None
+    updatedAt: Optional[datetime] = None
 
     class Config:
         from_attributes = True

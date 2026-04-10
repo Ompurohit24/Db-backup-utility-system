@@ -149,8 +149,9 @@ async def list_schedules(user_id: str) -> list[dict]:
         tables.list_rows,
         database_id=DATABASE_ID,
         table_id=BACKUP_SCHEDULES_COLLECTION_ID,
-        queries=[Query.equal("user_id", user_id), Query.order_desc("created_at")],
+        queries=[Query.equal("user_id", user_id) ],
     )
+    # Query.order_desc("createdAt")
     collection = normalize_row_collection(result)
     return [_to_schedule_out(row) for row in collection.get("rows", [])]
 

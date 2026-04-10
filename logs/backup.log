@@ -497,3 +497,423 @@
 2026-04-02 21:25:47,444 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
 2026-04-02 21:25:47,445 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
 2026-04-02 21:25:47,445 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-08 22:30:30,137 | INFO | scheduler | Scheduler started
+2026-04-08 22:30:34,375 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-08 22:30:34,377 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-08 22:30:34,377 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-08 22:30:34,377 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-08 22:30:34,377 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-08 22:30:34,378 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-08 22:30:34,378 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-08 22:30:34,378 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-08 22:30:34,378 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-08 22:30:34,378 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-08 22:30:34,379 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-08 22:30:34,379 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-08 22:30:34,379 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-08 22:30:34,379 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-08 22:30:34,379 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-08 22:30:34,380 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-08 22:40:00,013 | INFO | backup | Backup started user_id=69c01516df31230a0ffc db_config_id=69c02c16ea00af41f826
+2026-04-08 22:40:03,339 | INFO | backup | Backup connecting database user_id=69c01516df31230a0ffc db_config_id=69c02c16ea00af41f826 database=mydb
+2026-04-08 22:40:03,747 | INFO | backup | Backup file encrypted successfully user_id=69c01516df31230a0ffc db_config_id=69c02c16ea00af41f826 file=mysql_mydb_20260408_171003.sql.gz.enc
+2026-04-08 22:40:04,717 | INFO | backup | Backup completed user_id=69c01516df31230a0ffc db_config_id=69c02c16ea00af41f826 backup_id=69d68beba5434ac6c8cc status=success file=mysql_mydb_20260408_171003.sql.gz.enc size=2946
+2026-04-08 22:40:04,717 | INFO | scheduler | Scheduled backup finished schedule_id=69cbff9e7325b7dccb21
+2026-04-08 22:57:06,298 | INFO | scheduler | Scheduler stopped
+2026-04-08 23:11:33,163 | INFO | scheduler | Scheduler started
+2026-04-08 23:11:33,498 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-08 23:11:33,499 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-08 23:11:33,499 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-08 23:11:33,500 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-08 23:11:33,500 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-08 23:11:33,501 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-08 23:11:33,501 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-08 23:11:33,502 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-08 23:11:33,502 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-08 23:11:33,502 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-08 23:11:33,502 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-08 23:11:33,503 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-08 23:11:33,503 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-08 23:11:33,503 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-08 23:11:33,504 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-08 23:11:33,504 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-08 23:17:17,617 | INFO | scheduler | Scheduler stopped
+2026-04-08 23:17:18,965 | INFO | scheduler | Scheduler started
+2026-04-08 23:17:19,353 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:19,354 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-08 23:17:19,355 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:19,355 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-08 23:17:19,355 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:19,356 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-08 23:17:19,356 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:19,357 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-08 23:17:19,358 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:19,358 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-08 23:17:19,359 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:19,360 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-08 23:17:19,360 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:19,361 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-08 23:17:19,361 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:19,362 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-08 23:17:19,475 | INFO | scheduler | Scheduler stopped
+2026-04-08 23:17:20,632 | INFO | scheduler | Scheduler started
+2026-04-08 23:17:20,934 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:20,935 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-08 23:17:20,936 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:20,936 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-08 23:17:20,937 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:20,937 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-08 23:17:20,938 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:20,938 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-08 23:17:20,938 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:20,939 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-08 23:17:20,939 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:20,940 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-08 23:17:20,940 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:20,940 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-08 23:17:20,941 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:20,941 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-08 23:17:31,356 | INFO | scheduler | Scheduler started
+2026-04-08 23:17:31,663 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:31,664 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-08 23:17:31,665 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:31,666 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-08 23:17:31,666 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:31,667 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-08 23:17:31,667 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:31,668 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-08 23:17:31,668 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:31,669 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-08 23:17:31,670 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:31,670 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-08 23:17:31,671 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:31,671 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-08 23:17:31,672 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-08 23:17:31,672 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-09 00:22:36,643 | INFO | scheduler | Scheduler stopped
+2026-04-09 14:14:50,395 | INFO | scheduler | Scheduler started
+2026-04-09 14:14:52,396 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-09 14:14:52,398 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-09 14:14:52,398 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-09 14:14:52,399 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-09 14:14:52,399 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-09 14:14:52,400 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-09 14:14:52,401 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-09 14:14:52,401 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-09 14:14:52,402 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-09 14:14:52,402 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-09 14:14:52,403 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-09 14:14:52,403 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-09 14:14:52,404 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-09 14:14:52,404 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-09 14:14:52,405 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-09 14:14:52,405 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-09 14:29:39,727 | INFO | scheduler | Scheduler stopped
+2026-04-09 14:29:41,144 | INFO | scheduler | Scheduler started
+2026-04-09 14:29:42,986 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-09 14:29:42,987 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-09 14:29:42,988 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-09 14:29:42,988 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-09 14:29:42,989 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-09 14:29:42,989 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-09 14:29:42,990 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-09 14:29:42,990 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-09 14:29:42,991 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-09 14:29:42,991 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-09 14:29:42,991 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-09 14:29:42,992 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-09 14:29:42,992 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-09 14:29:42,992 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-09 14:29:42,993 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-09 14:29:42,993 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-09 15:50:49,174 | INFO | backup | Backup started user_id=69d76d36ac6d8f32259a db_config_id=69d77cfed6def70226cc
+2026-04-09 15:50:51,841 | INFO | backup | Backup connecting database user_id=69d76d36ac6d8f32259a db_config_id=69d77cfed6def70226cc database=mydb
+2026-04-09 15:50:52,011 | INFO | backup | Backup file encrypted successfully user_id=69d76d36ac6d8f32259a db_config_id=69d77cfed6def70226cc file=mysql_mydb_20260409_102051.sql.gz.enc
+2026-04-09 15:50:53,728 | INFO | backup | Backup completed user_id=69d76d36ac6d8f32259a db_config_id=69d77cfed6def70226cc backup_id=69d77d862e845d2139ef status=success file=mysql_mydb_20260409_102051.sql.gz.enc size=2946
+2026-04-09 16:50:45,534 | INFO | scheduler | Scheduler stopped
+2026-04-09 19:01:24,283 | INFO | scheduler | Scheduler started
+2026-04-09 19:01:26,100 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-09 19:01:26,102 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-09 19:01:26,103 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-09 19:01:26,104 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-09 19:01:26,104 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-09 19:01:26,105 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-09 19:01:26,106 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-09 19:01:26,107 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-09 19:01:26,107 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-09 19:01:26,108 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-09 19:01:26,108 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-09 19:01:26,109 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-09 19:01:26,109 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-09 19:01:26,110 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-09 19:01:26,110 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-09 19:01:26,111 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-09 19:26:04,641 | INFO | scheduler | Scheduler stopped
+2026-04-09 22:40:16,293 | INFO | scheduler | Scheduler started
+2026-04-09 22:40:22,468 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-09 22:40:22,470 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-09 22:40:22,471 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-09 22:40:22,472 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-09 22:40:22,472 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-09 22:40:22,473 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-09 22:40:22,473 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-09 22:40:22,473 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-09 22:40:22,474 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-09 22:40:22,474 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-09 22:40:22,474 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-09 22:40:22,475 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-09 22:40:22,475 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-09 22:40:22,476 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-09 22:40:22,476 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-09 22:40:22,476 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-09 23:05:04,942 | INFO | scheduler | Scheduler stopped
+2026-04-10 14:16:20,817 | INFO | scheduler | Scheduler started
+2026-04-10 14:16:22,690 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-10 14:16:22,693 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-10 14:16:22,695 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-10 14:16:22,696 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-10 14:16:22,697 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-10 14:16:22,698 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-10 14:16:22,698 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-10 14:16:22,699 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-10 14:16:22,700 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-10 14:16:22,700 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-10 14:16:22,701 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-10 14:16:22,702 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-10 14:16:22,702 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-10 14:16:22,703 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-10 14:16:22,703 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-10 14:16:22,704 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-10 17:53:09,016 | INFO | scheduler | Scheduler stopped
+2026-04-10 22:25:13,510 | INFO | scheduler | Scheduler started
+2026-04-10 22:25:15,295 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-10 22:25:15,297 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-10 22:25:15,298 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-10 22:25:15,298 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-10 22:25:15,299 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-10 22:25:15,299 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-10 22:25:15,299 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-10 22:25:15,300 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-10 22:25:15,300 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-10 22:25:15,301 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-10 22:25:15,301 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-10 22:25:15,301 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-10 22:25:15,302 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-10 22:25:15,302 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-10 22:25:15,302 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-10 22:25:15,303 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-10 22:29:00,016 | INFO | backup | Backup started user_id=69c01516df31230a0ffc db_config_id=69c02c16ea00af41f826
+2026-04-10 22:29:02,877 | INFO | backup | Backup connecting database user_id=69c01516df31230a0ffc db_config_id=69c02c16ea00af41f826 database=mydb
+2026-04-10 22:29:03,246 | INFO | backup | Backup file encrypted successfully user_id=69c01516df31230a0ffc db_config_id=69c02c16ea00af41f826 file=mysql_mydb_20260410_165902.sql.gz.enc
+2026-04-10 22:29:04,643 | INFO | backup | Backup completed user_id=69c01516df31230a0ffc db_config_id=69c02c16ea00af41f826 backup_id=69d92c58250b0852c94f status=success file=mysql_mydb_20260410_165902.sql.gz.enc size=2947
+2026-04-10 22:29:04,643 | INFO | scheduler | Scheduled backup finished schedule_id=69cbfd4b689941fc2f7c
+2026-04-10 22:40:00,012 | INFO | backup | Backup started user_id=69c01516df31230a0ffc db_config_id=69c02c16ea00af41f826
+2026-04-10 22:40:00,769 | INFO | backup | Backup connecting database user_id=69c01516df31230a0ffc db_config_id=69c02c16ea00af41f826 database=mydb
+2026-04-10 22:40:00,819 | INFO | backup | Backup file encrypted successfully user_id=69c01516df31230a0ffc db_config_id=69c02c16ea00af41f826 file=mysql_mydb_20260410_171000.sql.gz.enc
+2026-04-10 22:40:02,305 | INFO | backup | Backup completed user_id=69c01516df31230a0ffc db_config_id=69c02c16ea00af41f826 backup_id=69d92ee9c6ef77ea3e21 status=success file=mysql_mydb_20260410_171000.sql.gz.enc size=2946
+2026-04-10 22:40:02,306 | INFO | scheduler | Scheduled backup finished schedule_id=69cbff9e7325b7dccb21
+2026-04-10 22:45:57,088 | INFO | scheduler | Scheduler stopped
+2026-04-10 22:45:59,211 | INFO | scheduler | Scheduler started
+2026-04-10 22:45:59,571 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-10 22:45:59,572 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-10 22:45:59,572 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-10 22:45:59,573 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-10 22:45:59,573 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-10 22:45:59,573 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-10 22:45:59,573 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-10 22:45:59,574 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-10 22:45:59,574 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-10 22:45:59,575 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-10 22:45:59,575 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-10 22:45:59,576 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-10 22:45:59,576 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-10 22:45:59,577 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-10 22:45:59,577 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-10 22:45:59,578 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-10 22:50:57,528 | INFO | scheduler | Scheduler stopped
+2026-04-10 22:50:58,900 | INFO | scheduler | Scheduler started
+2026-04-10 22:50:59,252 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-10 22:50:59,253 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-10 22:50:59,253 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-10 22:50:59,254 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-10 22:50:59,254 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-10 22:50:59,254 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-10 22:50:59,254 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-10 22:50:59,254 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-10 22:50:59,255 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-10 22:50:59,255 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-10 22:50:59,255 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-10 22:50:59,255 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-10 22:50:59,255 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-10 22:50:59,255 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-10 22:50:59,256 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-10 22:50:59,256 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-10 22:50:59,359 | INFO | scheduler | Scheduler stopped
+2026-04-10 22:51:00,519 | INFO | scheduler | Scheduler started
+2026-04-10 22:51:00,845 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:00,845 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-10 22:51:00,846 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:00,846 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-10 22:51:00,846 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:00,847 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-10 22:51:00,847 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:00,847 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-10 22:51:00,847 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:00,849 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-10 22:51:00,849 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:00,850 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-10 22:51:00,851 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:00,851 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-10 22:51:00,851 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:00,851 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-10 22:51:00,967 | INFO | scheduler | Scheduler stopped
+2026-04-10 22:51:02,197 | INFO | scheduler | Scheduler started
+2026-04-10 22:51:02,489 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:02,491 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-10 22:51:02,491 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:02,492 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-10 22:51:02,493 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:02,493 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-10 22:51:02,494 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:02,494 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-10 22:51:02,494 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:02,494 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-10 22:51:02,495 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:02,495 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-10 22:51:02,495 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:02,496 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-10 22:51:02,496 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-10 22:51:02,496 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-10 22:52:35,718 | INFO | scheduler | Scheduler stopped
+2026-04-10 22:52:36,876 | INFO | scheduler | Scheduler started
+2026-04-10 22:52:37,222 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:37,223 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-10 22:52:37,224 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:37,225 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-10 22:52:37,225 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:37,225 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-10 22:52:37,225 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:37,226 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-10 22:52:37,226 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:37,226 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-10 22:52:37,226 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:37,226 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-10 22:52:37,226 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:37,227 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-10 22:52:37,227 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:37,227 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-10 22:52:37,339 | INFO | scheduler | Scheduler stopped
+2026-04-10 22:52:38,585 | INFO | scheduler | Scheduler started
+2026-04-10 22:52:38,899 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:38,900 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-10 22:52:38,900 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:38,900 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-10 22:52:38,901 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:38,901 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-10 22:52:38,901 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:38,901 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-10 22:52:38,901 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:38,902 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-10 22:52:38,902 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:38,902 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-10 22:52:38,903 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:38,903 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-10 22:52:38,904 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:38,905 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-10 22:52:57,858 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:57,859 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:57,859 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:57,860 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:57,861 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:57,861 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:57,862 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-10 22:52:57,862 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:37,764 | INFO | scheduler | Scheduler stopped
+2026-04-10 23:02:39,364 | INFO | scheduler | Scheduler started
+2026-04-10 23:02:43,675 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:43,676 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-10 23:02:43,677 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:43,677 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-10 23:02:43,678 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:43,678 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-10 23:02:43,679 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:43,679 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-10 23:02:43,679 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:43,680 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-10 23:02:43,680 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:43,686 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-10 23:02:43,687 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:43,687 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-10 23:02:43,687 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:43,688 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-10 23:02:43,796 | INFO | scheduler | Scheduler stopped
+2026-04-10 23:02:45,221 | INFO | scheduler | Scheduler started
+2026-04-10 23:02:45,551 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:45,552 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-10 23:02:45,552 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:45,553 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-10 23:02:45,554 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:45,554 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-10 23:02:45,555 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:45,556 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-10 23:02:45,556 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:45,557 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-10 23:02:45,558 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:45,558 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-10 23:02:45,559 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:45,560 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-10 23:02:45,560 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-10 23:02:45,561 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-10 23:15:57,880 | INFO | scheduler | Scheduler stopped
+2026-04-10 23:15:59,105 | INFO | scheduler | Scheduler started
+2026-04-10 23:15:59,432 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-10 23:15:59,434 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-10 23:15:59,434 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-10 23:15:59,435 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-10 23:15:59,436 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-10 23:15:59,436 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-10 23:15:59,437 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-10 23:15:59,437 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-10 23:15:59,437 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-10 23:15:59,438 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-10 23:15:59,438 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-10 23:15:59,439 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-10 23:15:59,439 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-10 23:15:59,440 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-10 23:15:59,440 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-10 23:15:59,441 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-10 23:15:59,554 | INFO | scheduler | Scheduler stopped
+2026-04-10 23:16:00,781 | INFO | scheduler | Scheduler started
+2026-04-10 23:16:01,083 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-10 23:16:01,084 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-10 23:16:01,085 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-10 23:16:01,085 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-10 23:16:01,086 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-10 23:16:01,086 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-10 23:16:01,087 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-10 23:16:01,087 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-10 23:16:01,088 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-10 23:16:01,088 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-10 23:16:01,088 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-10 23:16:01,089 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-10 23:16:01,089 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-10 23:16:01,090 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-10 23:16:01,090 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-10 23:16:01,090 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']
+2026-04-10 23:18:08,560 | INFO | scheduler | Scheduler started
+2026-04-10 23:18:10,631 | WARNING | scheduler | Invalid timezone '2026-03-31T13:59:31.989+00:00', falling back to Asia/Kolkata
+2026-04-10 23:18:10,634 | INFO | scheduler | Scheduled job 69cbd343f1650132d9a3 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='30']
+2026-04-10 23:18:10,634 | WARNING | scheduler | Invalid timezone '2026-03-31T14:03:43.546+00:00', falling back to Asia/Kolkata
+2026-04-10 23:18:10,635 | INFO | scheduler | Scheduled job 69cbd43f851750f4eda9 with cron=cron[month='*', day='*', day_of_week='*', hour='19', minute='35']
+2026-04-10 23:18:10,636 | WARNING | scheduler | Invalid timezone '2026-03-31T16:31:13.920+00:00', falling back to Asia/Kolkata
+2026-04-10 23:18:10,636 | INFO | scheduler | Scheduled job 69cbf6d1e0a0229fc178 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='2']
+2026-04-10 23:18:10,637 | WARNING | scheduler | Invalid timezone '2026-03-31T16:45:42.077+00:00', falling back to Asia/Kolkata
+2026-04-10 23:18:10,637 | INFO | scheduler | Scheduled job 69cbfa3612a6242633e4 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='17']
+2026-04-10 23:18:10,638 | WARNING | scheduler | Invalid timezone '2026-03-31T16:47:15.121+00:00', falling back to Asia/Kolkata
+2026-04-10 23:18:10,639 | INFO | scheduler | Scheduled job 69cbfa931d7f86f81dce with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='19']
+2026-04-10 23:18:10,639 | WARNING | scheduler | Invalid timezone '2026-03-31T16:53:11.238+00:00', falling back to Asia/Kolkata
+2026-04-10 23:18:10,640 | INFO | scheduler | Scheduled job 69cbfbf739ff90a5878f with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='24']
+2026-04-10 23:18:10,640 | WARNING | scheduler | Invalid timezone '2026-03-31T16:58:51.429+00:00', falling back to Asia/Kolkata
+2026-04-10 23:18:10,641 | INFO | scheduler | Scheduled job 69cbfd4b689941fc2f7c with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='29']
+2026-04-10 23:18:10,641 | WARNING | scheduler | Invalid timezone '2026-03-31T17:08:46.472+00:00', falling back to Asia/Kolkata
+2026-04-10 23:18:10,642 | INFO | scheduler | Scheduled job 69cbff9e7325b7dccb21 with cron=cron[month='*', day='*', day_of_week='*', hour='22', minute='40']

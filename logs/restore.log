@@ -76,3 +76,9 @@
 2026-04-01 21:25:38,044 | INFO | restore | Decryption started for uploaded file user_id=69c01516df31230a0ffc db_config_id=69c02c16ea00af41f826 file=mysql_mydb_20260401_140501.sql.gz.enc
 2026-04-01 21:25:41,094 | INFO | restore | Restore-from-upload started user_id=69c01516df31230a0ffc db_config_id=69c02c16ea00af41f826 filename=mysql_mydb_20260401_140501.sql.gz.enc
 2026-04-01 21:25:41,641 | INFO | restore | Decryption started for uploaded file user_id=69c01516df31230a0ffc db_config_id=69c02c16ea00af41f826 file=mysql_mydb_20260401_140501.sql.gz.enc
+2026-04-10 22:48:07,693 | INFO | restore | Decryption started for restore backup_id=69d92ee9c6ef77ea3e21
+2026-04-10 22:48:07,713 | INFO | restore | Decryption completed for restore backup_id=69d92ee9c6ef77ea3e21
+2026-04-10 22:48:19,926 | INFO | restore | Restore-from-record started user_id=69c01516df31230a0ffc backup_id=69d92ee9c6ef77ea3e21
+2026-04-10 22:48:21,740 | INFO | restore | Decryption started for restore backup_id=69d92ee9c6ef77ea3e21
+2026-04-10 22:48:21,741 | INFO | restore | Decryption completed for restore backup_id=69d92ee9c6ef77ea3e21
+2026-04-10 22:48:22,887 | INFO | restore | Restore-from-record completed user_id=69c01516df31230a0ffc backup_id=69d92ee9c6ef77ea3e21 status=success message=Restore completed successfully.

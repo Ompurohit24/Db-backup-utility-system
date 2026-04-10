@@ -60,7 +60,7 @@ async def register(payload: RegisterRequest):
             "email": user_data["email"],
         }
     except Exception as e:
-        return JSONResponse(status_code=400, content={"error": str(e)})
+        return JSONResponse(status_code=400, content={"detail": str(e)})
 
 
 @router.post("/login", response_model=TokenResponse)

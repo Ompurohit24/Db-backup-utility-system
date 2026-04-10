@@ -5,6 +5,7 @@ python-jose[cryptography]
 pydantic[email]
 appwrite
 bcrypt
+python-multipart
 cryptography
 APScheduler
 

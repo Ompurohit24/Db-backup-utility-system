@@ -98,6 +98,21 @@ async def list_user_databases(
     return normalize_row_collection(response)
 
 
+async def list_all_databases(limit: int = 50, offset: int = 0) -> dict:
+    """List saved database configs across all users (admin use)."""
+    response = await asyncio.to_thread(
+        tables.list_rows,
+        database_id=DATABASE_ID,
+        table_id=USER_DATABASES_COLLECTION_ID,
+        queries=[
+            Query.limit(limit),
+            Query.offset(offset),
+            Query.order_desc("created_at"),
+        ],
+    )
+    return normalize_row_collection(response)
+
+
 async def get_user_database(document_id: str) -> Optional[dict]:
     """Fetch a single saved database config by row ID."""
     try:
