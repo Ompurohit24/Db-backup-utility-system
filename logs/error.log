@@ -238,3 +238,4 @@ Traceback (most recent call last):
   File "D:\OM\d\DYPU\SEM-4\DB-Backup-Utility-backupFucntion\app\utils\file_encryption.py", line 107, in decrypt_bytes
     raise ValueError(f"Authentication tag verification failed: {str(e)}") from e
 ValueError: Authentication tag verification failed: 
+2026-04-11 19:01:02,739 | ERROR | error | Backup upload failed user_id=69d76d36ac6d8f32259a db_config_id=69d77cfed6def70226cc file=mysql_mydb_20260411_133101.sql.gz.enc error=[WinError 32] The process cannot access the file because it is being used by another process: 'D:\\OM\\d\\DYPU\\SEM-4\\DB-Backup-Utility-backupFucntion\\DB\\mysql_mydb_20260411_133101.sql.gz.enc'
