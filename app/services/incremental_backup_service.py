@@ -4,18 +4,14 @@ Orchestrates metadata tracking, change detection, and backup creation.
 """
 
 import asyncio
-import json
-from datetime import datetime, timezone
-from typing import Optional, List, Dict, Any
+from typing import List, Dict, Any
 
-from app.config import DATABASE_ID, BACKUPS_COLLECTION_ID
-from app.core.appwrite_client import databases
+from app.core.appwrite_client import tables
+from appwrite.query import Query
 from app.logger import get_logger
 from app.services.metadata_service import (
-    BackupMetadata,
     get_last_backup_time_async,
     get_backup_type_async,
-    update_metadata_async,
 )
 from app.utils.incremental_backup_engine import (
     IncrementalBackupEngine,
@@ -23,6 +19,29 @@ from app.utils.incremental_backup_engine import (
 )
 
 logger = get_logger("incremental")
+
+
+async def _list_all_table_rows(database_id: str, table_id: str, page_size: int = 100) -> List[Dict[str, Any]]:
+    """Fetch all table rows using paginated TablesDB list_rows."""
+    rows: List[Dict[str, Any]] = []
+    offset = 0
+
+    while True:
+        result = await asyncio.to_thread(
+            tables.list_rows,
+            database_id=database_id,
+            table_id=table_id,
+            queries=[Query.limit(page_size), Query.offset(offset)],
+        )
+
+        page = result.get("rows", result.get("documents", [])) if isinstance(result, dict) else []
+        rows.extend(page)
+
+        if len(page) < page_size:
+            break
+        offset += page_size
+
+    return rows
 
 
 class IncrementalBackupService:
@@ -134,26 +153,7 @@ class IncrementalBackupService:
 async def _prepare_full_backup(database_id: str, table_id: str) -> Dict[str, Any]:
     """Prepare a full backup by fetching all records from a table."""
     try:
-        def _fetch_all_records():
-            result = databases.list_documents(
-                database_id=database_id,
-                collection_id=table_id,
-                limit=10000,  # Appwrite max limit
-            )
-            return result
-        
-        result = await asyncio.to_thread(_fetch_all_records)
-        
-        # Normalize records
-        records = []
-        if hasattr(result, "documents"):
-            for doc in result.documents:
-                if hasattr(doc, "to_dict"):
-                    records.append(doc.to_dict())
-                else:
-                    records.append(doc)
-        elif isinstance(result, dict) and "documents" in result:
-            records = result["documents"]
+        records = await _list_all_table_rows(database_id, table_id)
         
         logger.info("Full backup: fetched %d records from table", len(records))
         return IncrementalBackupEngine.create_full_backup(records)
@@ -175,27 +175,7 @@ async def _prepare_incremental_backup(
             logger.warning("No last backup time, falling back to full backup")
             return await _prepare_full_backup(database_id, table_id)
         
-        # Fetch all records
-        def _fetch_all_records():
-            result = databases.list_documents(
-                database_id=database_id,
-                collection_id=table_id,
-                limit=10000,
-            )
-            return result
-        
-        result = await asyncio.to_thread(_fetch_all_records)
-        
-        # Normalize records
-        records = []
-        if hasattr(result, "documents"):
-            for doc in result.documents:
-                if hasattr(doc, "to_dict"):
-                    records.append(doc.to_dict())
-                else:
-                    records.append(doc)
-        elif isinstance(result, dict) and "documents" in result:
-            records = result["documents"]
+        records = await _list_all_table_rows(database_id, table_id)
         
         # Detect changes
         new_records, updated_records, deleted_records = (

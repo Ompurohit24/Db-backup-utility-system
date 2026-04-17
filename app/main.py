@@ -12,6 +12,7 @@ from app.routes.admin import router as admin_router
 from app.services.schedule_service import load_active_schedules
 from app.utils.scheduler import scheduler_shutdown, scheduler_startup
 from fastapi.middleware.cors import CORSMiddleware
+from app.routes.logs import router as logs_router
 
 
 @asynccontextmanager
@@ -24,7 +25,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(title="Database Backup Utility", version="1.0", lifespan=lifespan)
-
+app.include_router(logs_router)
 app.include_router(auth_router)
 app.include_router(user_router)
 app.include_router(database_router)
@@ -40,7 +41,11 @@ def home():
 # ✅ Allowed frontend URLs
 origins = [
     "http://localhost:3000",     # React / Next.js
-    "http://127.0.0.1:5500",    # Live Server (VS Code)
+    "http://127.0.0.1:5500",
+    "http://127.0.0.1:5501",
+    "http://localhost:5501",
+    "http://127.0.0.1:5500",
+    "http://localhost:5500"   # Live Server (VS Code)
 ]
 
 # ✅ Add CORS middleware

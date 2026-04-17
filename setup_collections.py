@@ -148,6 +148,9 @@ def setup_backups_collection():
         ("original_file_name", 512, False),
         ("original_file_size", 50,  False),
         ("compression",   50,   False),
+        ("encryption",    50,   False),
+        ("backup_type",   50,   False),
+        ("base_backup_id", 255, False),
         ("status",        50,   True),   # success | failed
         ("error_message", 2048, False),
         ("created_at",    50,   True),

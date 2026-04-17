@@ -82,3 +82,62 @@
 2026-04-10 22:48:21,740 | INFO | restore | Decryption started for restore backup_id=69d92ee9c6ef77ea3e21
 2026-04-10 22:48:21,741 | INFO | restore | Decryption completed for restore backup_id=69d92ee9c6ef77ea3e21
 2026-04-10 22:48:22,887 | INFO | restore | Restore-from-record completed user_id=69c01516df31230a0ffc backup_id=69d92ee9c6ef77ea3e21 status=success message=Restore completed successfully.
+2026-04-13 22:34:07,401 | INFO | restore | Decryption started for restore backup_id=69dbc39fbdd442bb4bd7
+2026-04-13 22:34:07,416 | INFO | restore | Decryption completed for restore backup_id=69dbc39fbdd442bb4bd7
+2026-04-13 22:35:57,224 | INFO | restore | Decryption started for restore backup_id=69dd1e45071657d3c96f
+2026-04-13 22:35:57,225 | INFO | restore | Decryption completed for restore backup_id=69dd1e45071657d3c96f
+2026-04-13 22:36:18,654 | INFO | restore | Decryption started for restore backup_id=69dd1e0bc8589f849734
+2026-04-13 22:36:18,655 | INFO | restore | Decryption completed for restore backup_id=69dd1e0bc8589f849734
+2026-04-13 22:48:04,016 | INFO | restore | Restore-from-record started user_id=69d76d36ac6d8f32259a backup_id=69d77d862e845d2139ef
+2026-04-13 22:48:05,836 | INFO | restore | Decryption started for restore backup_id=69d77d862e845d2139ef
+2026-04-13 22:48:05,837 | INFO | restore | Decryption completed for restore backup_id=69d77d862e845d2139ef
+2026-04-13 22:48:06,843 | INFO | restore | Restore-from-record completed user_id=69d76d36ac6d8f32259a backup_id=69d77d862e845d2139ef status=success message=Restore completed successfully.
+2026-04-13 22:49:01,590 | INFO | restore | Restore-from-record started user_id=69c01516df31230a0ffc backup_id=69dd1ebb66818fa8953e
+2026-04-13 22:49:03,578 | INFO | restore | Decryption started for restore backup_id=69dd1ebb66818fa8953e
+2026-04-13 22:49:03,579 | INFO | restore | Decryption completed for restore backup_id=69dd1ebb66818fa8953e
+2026-04-13 22:49:04,570 | INFO | restore | Restore-from-record completed user_id=69c01516df31230a0ffc backup_id=69dd1ebb66818fa8953e status=success message=Restore completed successfully.
+2026-04-13 22:50:38,930 | INFO | restore | Restore-from-record started user_id=69d76d36ac6d8f32259a backup_id=69da4d09364264cb9bdf
+2026-04-13 22:50:40,672 | INFO | restore | Decryption started for restore backup_id=69da4d09364264cb9bdf
+2026-04-13 22:50:40,673 | INFO | restore | Decryption completed for restore backup_id=69da4d09364264cb9bdf
+2026-04-13 22:50:41,566 | INFO | restore | Restore-from-record completed user_id=69d76d36ac6d8f32259a backup_id=69da4d09364264cb9bdf status=success message=Restore completed successfully.
+2026-04-13 22:52:12,477 | INFO | restore | Restore-from-record started user_id=69d76d36ac6d8f32259a backup_id=69da8d1200ff53dac547
+2026-04-13 22:52:14,232 | INFO | restore | Decryption started for restore backup_id=69da8d1200ff53dac547
+2026-04-13 22:52:14,233 | INFO | restore | Decryption completed for restore backup_id=69da8d1200ff53dac547
+2026-04-13 22:52:15,026 | INFO | restore | Restore-from-record completed user_id=69d76d36ac6d8f32259a backup_id=69da8d1200ff53dac547 status=success message=Restore completed successfully.
+2026-04-13 23:07:09,957 | INFO | restore | Restore-from-record started user_id=69d76d36ac6d8f32259a backup_id=69da8d1200ff53dac547
+2026-04-13 23:07:12,096 | INFO | restore | Decryption started for restore backup_id=69da8d1200ff53dac547
+2026-04-13 23:07:12,097 | INFO | restore | Decryption completed for restore backup_id=69da8d1200ff53dac547
+2026-04-13 23:07:12,828 | INFO | restore | Restore-from-record completed user_id=69d76d36ac6d8f32259a backup_id=69da8d1200ff53dac547 status=success message=Restore completed successfully.
+2026-04-13 23:09:56,592 | INFO | restore | Restore-from-record started user_id=69c01516df31230a0ffc backup_id=69da7b7edd107eb533fc
+2026-04-13 23:09:58,484 | INFO | restore | Decryption started for restore backup_id=69da7b7edd107eb533fc
+2026-04-13 23:09:58,485 | INFO | restore | Decryption completed for restore backup_id=69da7b7edd107eb533fc
+2026-04-13 23:09:59,290 | INFO | restore | Restore-from-record completed user_id=69c01516df31230a0ffc backup_id=69da7b7edd107eb533fc status=success message=Restore completed successfully.
+2026-04-14 21:44:18,280 | INFO | restore | Decryption started for restore backup_id=69de48623906823f6f99
+2026-04-14 21:44:18,328 | INFO | restore | Decryption completed for restore backup_id=69de48623906823f6f99
+2026-04-14 21:45:27,118 | INFO | restore | Decryption started for restore backup_id=69de6814a2169fc9a708
+2026-04-14 21:45:27,118 | INFO | restore | Decryption completed for restore backup_id=69de6814a2169fc9a708
+2026-04-14 22:07:27,906 | INFO | restore | Decryption started for restore backup_id=69de6c021fc1b471a313
+2026-04-14 22:07:27,906 | INFO | restore | Decryption completed for restore backup_id=69de6c021fc1b471a313
+2026-04-14 23:36:39,283 | INFO | restore | Restore-from-upload started user_id=69c01516df31230a0ffc db_config_id=69de6d7e56ab435aac32 filename=backup_69de6c021fc1b471a313.sql
+2026-04-14 23:36:40,317 | INFO | restore | Restore-from-upload completed user_id=69c01516df31230a0ffc db_config_id=69de6d7e56ab435aac32 status=failed message='utf-8' codec can't decode byte 0x8b in position 1: invalid start byte
+2026-04-14 23:36:52,482 | INFO | restore | Restore-from-upload started user_id=69c01516df31230a0ffc db_config_id=69de6d7e56ab435aac32 filename=backup_69de48623906823f6f99.sql
+2026-04-14 23:36:53,560 | INFO | restore | Restore-from-upload completed user_id=69c01516df31230a0ffc db_config_id=69de6d7e56ab435aac32 status=failed message='utf-8' codec can't decode byte 0x8b in position 1: invalid start byte
+2026-04-14 23:37:01,833 | INFO | restore | Restore-from-upload started user_id=69c01516df31230a0ffc db_config_id=69de6d7e56ab435aac32 filename=mysql_mydb_20260401_140501.sql.gz.enc
+2026-04-14 23:37:02,314 | INFO | restore | Decryption started for uploaded file user_id=69c01516df31230a0ffc db_config_id=69de6d7e56ab435aac32 file=mysql_mydb_20260401_140501.sql.gz.enc
+2026-04-14 23:37:18,251 | INFO | restore | Restore-from-upload started user_id=69c01516df31230a0ffc db_config_id=69de6d7e56ab435aac32 filename=mysql_mydb_20260324_155715.sql.gz
+2026-04-14 23:37:19,576 | INFO | restore | Restore-from-upload completed user_id=69c01516df31230a0ffc db_config_id=69de6d7e56ab435aac32 status=success message=Restore completed successfully.
+2026-04-14 23:41:32,803 | INFO | restore | Restore-from-record started user_id=69c01516df31230a0ffc backup_id=69de40f977f1bfa2ad85
+2026-04-14 23:41:34,275 | INFO | restore | Decryption started for restore backup_id=69de40f977f1bfa2ad85
+2026-04-14 23:41:34,276 | INFO | restore | Decryption completed for restore backup_id=69de40f977f1bfa2ad85
+2026-04-14 23:41:34,975 | INFO | restore | Restore-from-record completed user_id=69c01516df31230a0ffc backup_id=69de40f977f1bfa2ad85 status=failed message=relation "employees_id_seq" does not exist
+LINE 2:   id integer DEFAULT nextval('employees_id_seq'::regclass) N...
+                                     ^
+
+2026-04-14 23:42:25,090 | INFO | restore | Restore-from-record started user_id=69c01516df31230a0ffc backup_id=69de74ea0a854118d326
+2026-04-14 23:42:26,565 | INFO | restore | Decryption started for restore backup_id=69de74ea0a854118d326
+2026-04-14 23:42:26,566 | INFO | restore | Decryption completed for restore backup_id=69de74ea0a854118d326
+2026-04-14 23:42:27,236 | INFO | restore | Restore-from-record completed user_id=69c01516df31230a0ffc backup_id=69de74ea0a854118d326 status=success message=Restore completed successfully.
+2026-04-14 23:43:15,168 | INFO | restore | Restore-from-record started user_id=69c01516df31230a0ffc backup_id=69de71dd73e818b4527a
+2026-04-14 23:43:16,775 | INFO | restore | Decryption started for restore backup_id=69de71dd73e818b4527a
+2026-04-14 23:43:16,776 | INFO | restore | Decryption completed for restore backup_id=69de71dd73e818b4527a
+2026-04-14 23:43:17,429 | INFO | restore | Restore-from-record completed user_id=69c01516df31230a0ffc backup_id=69de71dd73e818b4527a status=success message=Restore completed successfully.

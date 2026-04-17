@@ -14,6 +14,20 @@ class AdminDatabaseRecord(BaseModel):
     updated_at: str = ""
 
 
+class AdminBackupRecord(BaseModel):
+    backup_id: str
+    db_config_id: str
+    user_id: str
+    database_type: str
+    database_name: str
+    file_name: str
+    file_size: int
+    status: str
+    compression: str = "none"
+    encryption: str = "none"
+    created_at: str = ""
+
+
 class AdminRestoreRecord(BaseModel):
     restore_id: str
     user_id: str

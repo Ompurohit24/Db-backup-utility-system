@@ -33,6 +33,8 @@ class TriggerBackupResponse(BaseModel):
     compression: str
     original_file_name: str
     original_file_size: int
+    backup_type: str = "full"
+    base_backup_id: Optional[str] = None
     status: str
     created_at: str
 
@@ -55,6 +57,8 @@ class BackupRecord(BaseModel):
     compression: str = "none"
     original_file_name: str = ""
     original_file_size: int = 0
+    backup_type: str = "full"
+    base_backup_id: Optional[str] = None
     status: str
     error_message: Optional[str] = None
     created_at: str

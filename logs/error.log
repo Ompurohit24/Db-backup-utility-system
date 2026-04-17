@@ -239,3 +239,34 @@ Traceback (most recent call last):
     raise ValueError(f"Authentication tag verification failed: {str(e)}") from e
 ValueError: Authentication tag verification failed: 
 2026-04-11 19:01:02,739 | ERROR | error | Backup upload failed user_id=69d76d36ac6d8f32259a db_config_id=69d77cfed6def70226cc file=mysql_mydb_20260411_133101.sql.gz.enc error=[WinError 32] The process cannot access the file because it is being used by another process: 'D:\\OM\\d\\DYPU\\SEM-4\\DB-Backup-Utility-backupFucntion\\DB\\mysql_mydb_20260411_133101.sql.gz.enc'
+2026-04-13 18:00:04,879 | ERROR | error | Backup encryption failed user_id=69d76d36ac6d8f32259a db_config_id=69d77cfed6def70226cc error=[Errno 2] No such file or directory: 'D:\\OM\\d\\DYPU\\SEM-4\\DB-Backup-Utility-backupFucntion\\DB\\mysql_mydb_20260413_123004.sql'
+2026-04-13 18:00:04,880 | ERROR | error | Backup encryption failed user_id=69d76d36ac6d8f32259a db_config_id=69d77cfed6def70226cc error=[Errno 2] No such file or directory: 'D:\\OM\\d\\DYPU\\SEM-4\\DB-Backup-Utility-backupFucntion\\DB\\mysql_mydb_20260413_123004.sql'
+2026-04-13 18:19:00,895 | ERROR | error | Backup encryption failed user_id=69c01516df31230a0ffc db_config_id=69ce964d3e9fe140b8e4 error=[WinError 32] The process cannot access the file because it is being used by another process: 'D:\\OM\\d\\DYPU\\SEM-4\\DB-Backup-Utility-backupFucntion\\DB\\mongodb_mydb_20260413_124900.json.gz'
+2026-04-14 18:19:02,569 | ERROR | error | Backup upload failed user_id=69c01516df31230a0ffc db_config_id=69ce964d3e9fe140b8e4 file=mongodb_mydb_20260414_124901.json.gz.enc error=[WinError 32] The process cannot access the file because it is being used by another process: 'D:\\OM\\d\\DYPU\\SEM-4\\DB-Backup-Utility-backupFucntion\\DB\\mongodb_mydb_20260414_124901.json.gz.enc'
+2026-04-14 23:36:39,799 | ERROR | error | Restore-from-upload failed user_id=69c01516df31230a0ffc db_config_id=69de6d7e56ab435aac32 filename=backup_69de6c021fc1b471a313.sql message='utf-8' codec can't decode byte 0x8b in position 1: invalid start byte
+2026-04-14 23:36:52,972 | ERROR | error | Restore-from-upload failed user_id=69c01516df31230a0ffc db_config_id=69de6d7e56ab435aac32 filename=backup_69de48623906823f6f99.sql message='utf-8' codec can't decode byte 0x8b in position 1: invalid start byte
+2026-04-14 23:37:02,321 | ERROR | error | Decryption failed for uploaded file user_id=69c01516df31230a0ffc db_config_id=69de6d7e56ab435aac32 file=mysql_mydb_20260401_140501.sql.gz.enc error=Authentication tag verification failed: 
+Traceback (most recent call last):
+  File "D:\OM\d\DYPU\SEM-4\DB-Backup-Utility-backupFucntion\app\utils\file_encryption.py", line 105, in decrypt_bytes
+    decryptor.finalize()
+    ~~~~~~~~~~~~~~~~~~^^
+cryptography.exceptions.InvalidTag
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\OM\d\DYPU\SEM-4\DB-Backup-Utility-backupFucntion\app\services\backup_service.py", line 862, in restore_backup_from_upload
+    file_bytes = await asyncio.to_thread(decrypt_bytes, file_bytes, key)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\Lib\asyncio\threads.py", line 25, in to_thread
+    return await loop.run_in_executor(None, func_call)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Program Files\WindowsApps\PythonSoftwareFoundation.Python.3.13_3.13.3312.0_x64__qbz5n2kfra8p0\Lib\concurrent\futures\thread.py", line 59, in run
+    result = self.fn(*self.args, **self.kwargs)
+  File "D:\OM\d\DYPU\SEM-4\DB-Backup-Utility-backupFucntion\app\utils\file_encryption.py", line 107, in decrypt_bytes
+    raise ValueError(f"Authentication tag verification failed: {str(e)}") from e
+ValueError: Authentication tag verification failed: 
+2026-04-14 23:41:34,495 | ERROR | error | Restore failed user_id=69c01516df31230a0ffc backup_id=69de40f977f1bfa2ad85 db_config_id=69de409a1afee9210e54 message=relation "employees_id_seq" does not exist
+LINE 2:   id integer DEFAULT nextval('employees_id_seq'::regclass) N...
+                                     ^
+

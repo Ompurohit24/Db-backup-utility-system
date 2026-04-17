@@ -30,6 +30,7 @@ router = APIRouter(tags=["Backups"])
 async def trigger_backup(
     document_id: str,
     request: Request,
+    backup_type: str = QParam(default="auto", description="auto | full | incremental"),
     current_user: dict = Depends(get_current_user),
 ):
     """
@@ -44,6 +45,7 @@ async def trigger_backup(
         doc = await backup_service.trigger_backup(
             db_config_id=document_id,
             user_id=current_user["user_id"],
+            backup_type=backup_type,
             role="user",
             ip_address=request.client.host if request.client else None,
             device_info=request.headers.get("user-agent", ""),
@@ -70,6 +72,8 @@ async def trigger_backup(
             compression=doc.get("compression", "none"),
             original_file_name=doc.get("original_file_name", ""),
             original_file_size=int(doc.get("original_file_size", 0) or 0),
+            backup_type=doc.get("backup_type", "full"),
+            base_backup_id=doc.get("base_backup_id") or None,
             status=doc["status"],
             created_at=doc["created_at"],
         )
@@ -273,24 +277,61 @@ async def download_backup(
 
 # ── Helper ────────────────────────────────────────────────────────────
 
+# def _to_backup_record(doc: dict) -> BackupRecord:
+#     return BackupRecord(
+#         backup_id=doc["$id"],
+#         db_config_id=doc["db_config_id"],
+#         owner_user_id=get_owner_user_id(doc),
+#         user_id=get_owner_user_id(doc),
+#         database_type=doc["database_type"],
+#         database_name=doc["database_name"],
+#         file_name=doc["file_name"],
+#         file_path=doc.get("file_path", ""),
+#         file_id=doc.get("file_id", ""),
+#         storage_bucket=doc.get("storage_bucket", ""),
+#         file_size=int(doc.get("file_size", 0)),
+#         compression=doc.get("compression", "none"),
+#         original_file_name=doc.get("original_file_name", ""),
+#         original_file_size=int(doc.get("original_file_size", 0) or 0),
+#         backup_type=doc.get("backup_type", "full"),
+#         base_backup_id=doc.get("base_backup_id") or None,
+#         status=doc["status"],
+#         error_message=doc.get("error_message") or None,
+#         created_at=doc["created_at"],
+#     )
+
+def _safe_str(value, default=""):
+    if value is None:
+        return default
+    return str(value)
+
 def _to_backup_record(doc: dict) -> BackupRecord:
     return BackupRecord(
-        backup_id=doc["$id"],
-        db_config_id=doc["db_config_id"],
-        owner_user_id=get_owner_user_id(doc),
-        user_id=get_owner_user_id(doc),
-        database_type=doc["database_type"],
-        database_name=doc["database_name"],
-        file_name=doc["file_name"],
-        file_path=doc.get("file_path", ""),
-        file_id=doc.get("file_id", ""),
-        storage_bucket=doc.get("storage_bucket", ""),
-        file_size=int(doc.get("file_size", 0)),
-        compression=doc.get("compression", "none"),
-        original_file_name=doc.get("original_file_name", ""),
-        original_file_size=int(doc.get("original_file_size", 0) or 0),
-        status=doc["status"],
-        error_message=doc.get("error_message") or None,
-        created_at=doc["created_at"],
-    )
+        backup_id=_safe_str(doc.get("$id")),
+        db_config_id=_safe_str(doc.get("db_config_id")),
+        owner_user_id=_safe_str(get_owner_user_id(doc)),
+        user_id=_safe_str(get_owner_user_id(doc)),
 
+        database_type=_safe_str(doc.get("database_type"), "unknown"),
+        database_name=_safe_str(doc.get("database_name"), "Unknown DB"),
+
+        file_name=_safe_str(doc.get("file_name"), "backup.sql"),
+        file_path=_safe_str(doc.get("file_path")),
+        file_id=_safe_str(doc.get("file_id")),
+        storage_bucket=_safe_str(doc.get("storage_bucket")),
+
+        file_size=int(doc.get("file_size", 0) or 0),
+
+        compression=_safe_str(doc.get("compression"), "none"),
+
+        original_file_name=_safe_str(doc.get("original_file_name")),
+        original_file_size=int(doc.get("original_file_size", 0) or 0),
+
+        backup_type=_safe_str(doc.get("backup_type"), "full"),
+        base_backup_id=_safe_str(doc.get("base_backup_id")) or None,
+
+        status=_safe_str(doc.get("status"), "Success"),
+        error_message=_safe_str(doc.get("error_message")) or None,
+
+        created_at=_safe_str(doc.get("created_at")),
+    )

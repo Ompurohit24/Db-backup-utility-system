@@ -13,7 +13,7 @@ from appwrite.exception import AppwriteException
 from appwrite.query import Query
 from appwrite.input_file import InputFile
 
-from app.core.appwrite_client import tables, storage, databases   # TablesDB API + Storage + Databases
+from app.core.appwrite_client import tables, storage
 from app.config import (
     DATABASE_ID,
     BACKUPS_COLLECTION_ID,
@@ -23,6 +23,7 @@ from app.config import (
 from app.logger import get_logger
 from app.services.database_service import get_user_database_decrypted
 from app.services import log_service
+from app.services.metadata_service import update_metadata_async
 from app.utils.appwrite_normalize import normalize_row, normalize_row_collection
 from app.utils.backup_engine import run_backup, BackupResult, run_restore
 from app.utils.compression import gzip_compress, gzip_decompress, is_gzip_name
@@ -57,15 +58,25 @@ async def _ensure_backup_attributes():
 
     def _create_string(key: str, size: int):
         try:
-            databases.create_string_attribute(
-                database_id=DATABASE_ID,
-                collection_id=BACKUPS_COLLECTION_ID,
-                key=key,
-                size=size,
-                required=False,
-            )
+            if hasattr(tables, "create_text_column"):
+                tables.create_text_column(
+                    database_id=DATABASE_ID,
+                    table_id=BACKUPS_COLLECTION_ID,
+                    key=key,
+                    size=size,
+                    required=False,
+                )
+            else:
+                # Backward compatibility for older Appwrite SDKs.
+                tables.create_string_column(
+                    database_id=DATABASE_ID,
+                    table_id=BACKUPS_COLLECTION_ID,
+                    key=key,
+                    size=size,
+                    required=False,
+                )
         except Exception as e:
-            if "already exists" not in str(e).lower():
+            if "already exists" not in str(e).lower() and "duplicate" not in str(e).lower():
                 raise
 
     # Best-effort; run in a worker thread to avoid blocking the event loop.
@@ -74,10 +85,62 @@ async def _ensure_backup_attributes():
         await asyncio.to_thread(_create_string, "original_file_size", 50)
         await asyncio.to_thread(_create_string, "compression", 50)
         await asyncio.to_thread(_create_string, "encryption", 50)
+        await asyncio.to_thread(_create_string, "backup_type", 50)
+        await asyncio.to_thread(_create_string, "base_backup_id", 255)
         _backup_attrs_ensured = True
     except Exception:
         # Do not fail the request if attribute creation has permission issues.
         pass
+
+
+async def _get_last_successful_backup(user_id: str, db_config_id: str) -> Optional[dict]:
+    """Return latest successful backup row for a database config, if available."""
+    base_queries = [
+        Query.equal("user_id", user_id),
+        Query.equal("db_config_id", db_config_id),
+        Query.equal("status", "success"),
+        Query.limit(1),
+    ]
+
+    try:
+        response = await asyncio.to_thread(
+            tables.list_rows,
+            database_id=DATABASE_ID,
+            table_id=BACKUPS_COLLECTION_ID,
+            queries=[*base_queries, Query.order_desc("created_at")],
+        )
+    except Exception:
+        response = await asyncio.to_thread(
+            tables.list_rows,
+            database_id=DATABASE_ID,
+            table_id=BACKUPS_COLLECTION_ID,
+            queries=base_queries,
+        )
+
+    rows = normalize_row_collection(response).get("rows", [])
+    return rows[0] if rows else None
+
+
+async def _resolve_backup_type(
+    requested_type: str,
+    *,
+    user_id: str,
+    db_config_id: str,
+) -> tuple[str, Optional[dict], str]:
+    """Resolve requested mode into effective backup type and base backup context."""
+    mode = (requested_type or "auto").strip().lower()
+    if mode not in {"auto", "full", "incremental"}:
+        raise ValueError("backup_type must be one of: auto, full, incremental")
+
+    if mode == "full":
+        return "full", None, ""
+
+    last_success = await _get_last_successful_backup(user_id=user_id, db_config_id=db_config_id)
+    if last_success:
+        return "incremental", last_success, ""
+
+    # First backup (or no successful prior backup) cannot be incremental.
+    return "full", None, "No previous successful backup found; full backup was created."
 
 
 # ── Trigger a backup ─────────────────────────────────────────────────
@@ -85,6 +148,7 @@ async def _ensure_backup_attributes():
 async def trigger_backup(
     db_config_id: str,
     user_id: str,
+    backup_type: str = "auto",
     role: str = "user",
     ip_address: str | None = None,
     device_info: str | None = None,
@@ -119,6 +183,13 @@ async def trigger_backup(
         db_config_id,
         doc.get("database_name", ""),
     )
+
+    effective_backup_type, base_backup, backup_type_note = await _resolve_backup_type(
+        backup_type,
+        user_id=user_id,
+        db_config_id=db_config_id,
+    )
+    base_backup_id = (base_backup or {}).get("$id", "")
 
     try:
         log_row = await log_service.create_log_entry(
@@ -277,6 +348,8 @@ async def trigger_backup(
         result.message = f"{result.message} (Compression skipped: {compression_error})"
     if encryption_error:
         result.message = f"{result.message} (Encryption issue: {encryption_error})"
+    if backup_type_note:
+        result.message = f"{result.message} ({backup_type_note})"
 
     if not getattr(result, "encryption", None):
         result.encryption = "aes-256-gcm" if not encryption_error and result.success else "none"
@@ -298,6 +371,8 @@ async def trigger_backup(
         "original_file_size": str(result.original_file_size) if result.original_file_size is not None else "0",
         "compression":   result.compression or "none",
         "encryption":    getattr(result, "encryption", "none"),
+        "backup_type":   effective_backup_type,
+        "base_backup_id": base_backup_id,
         "status":        "success" if result.success else "failed",
         "error_message": "" if result.success else result.message,
         "created_at":    now,
@@ -340,9 +415,23 @@ async def trigger_backup(
         except Exception:
             pass
 
+    try:
+        await update_metadata_async(
+            db_config_id=db_config_id,
+            backup_type=effective_backup_type,
+            file_id=file_id or backup_row.get("$id", ""),
+            file_name=result.file_name or "",
+            status="success" if result.success else "failed",
+            error_message=result.message if not result.success else None,
+        )
+    except Exception:
+        pass
+
     # Attach success/error message so routes can surface it
     backup_row["_result_message"] = result.message
     backup_row["_success"] = result.success
+    backup_row["backup_type"] = backup_row.get("backup_type", effective_backup_type)
+    backup_row["base_backup_id"] = backup_row.get("base_backup_id", base_backup_id)
 
     return backup_row
 
@@ -373,6 +462,27 @@ async def list_backups(
         table_id=BACKUPS_COLLECTION_ID,
         queries=queries,
     )
+
+    return normalize_row_collection(response)
+
+
+async def list_all_backups(limit: int = 50, offset: int = 0) -> dict:
+    """List backup records across all users (admin use)."""
+    base_queries = [Query.limit(limit), Query.offset(offset)]
+    try:
+        response = await asyncio.to_thread(
+            tables.list_rows,
+            database_id=DATABASE_ID,
+            table_id=BACKUPS_COLLECTION_ID,
+            queries=[*base_queries, Query.order_desc("created_at")],
+        )
+    except AppwriteException:
+        response = await asyncio.to_thread(
+            tables.list_rows,
+            database_id=DATABASE_ID,
+            table_id=BACKUPS_COLLECTION_ID,
+            queries=base_queries,
+        )
 
     return normalize_row_collection(response)
 
