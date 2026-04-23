@@ -15,6 +15,7 @@ from fastapi import Request
 
 from app.schemas.backup import TriggerBackupResponse, BackupRecord
 from app.services import backup_service
+from app.services import notification_service
 from app.utils.dependencies import get_current_user
 from app.utils.ownership import get_owner_user_id
 
@@ -182,6 +183,13 @@ async def delete_backup(
                 status_code=403, content={"error": "Access denied"}
             )
         await backup_service.delete_backup(backup_id, delete_file=delete_file)
+        await notification_service.create_notification(
+            user_id=current_user["user_id"],
+            event_type="backup_deleted",
+            level="warning",
+            title="Backup Deleted",
+            message=f"Backup '{doc.get('file_name', backup_id)}' deleted successfully.",
+        )
         return {"message": "Backup record deleted successfully."}
     except Exception as e:
         return JSONResponse(status_code=500, content={"error": str(e)})
@@ -305,6 +313,15 @@ def _safe_str(value, default=""):
         return default
     return str(value)
 
+
+def _safe_float_or_none(value):
+    if value is None or value == "":
+        return None
+    try:
+        return round(float(value), 3)
+    except (TypeError, ValueError):
+        return None
+
 def _to_backup_record(doc: dict) -> BackupRecord:
     return BackupRecord(
         backup_id=_safe_str(doc.get("$id")),
@@ -321,6 +338,9 @@ def _to_backup_record(doc: dict) -> BackupRecord:
         storage_bucket=_safe_str(doc.get("storage_bucket")),
 
         file_size=int(doc.get("file_size", 0) or 0),
+        duration_seconds=_safe_float_or_none(
+            doc.get("duration_seconds", doc.get("duration"))
+        ),
 
         compression=_safe_str(doc.get("compression"), "none"),
 

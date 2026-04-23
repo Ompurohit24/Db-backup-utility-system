@@ -54,6 +54,7 @@ class BackupRecord(BaseModel):
     file_id: str = ""
     storage_bucket: str = ""
     file_size: int
+    duration_seconds: Optional[float] = None
     compression: str = "none"
     original_file_name: str = ""
     original_file_size: int = 0

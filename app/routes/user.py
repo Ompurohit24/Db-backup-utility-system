@@ -186,6 +186,7 @@ async def my_dashboard(
                     database_name=str(doc.get("database_name", "")),
                     file_name=str(doc.get("file_name", "")),
                     file_size=_safe_int(doc.get("file_size", 0)),
+                    file_size_mb=round(_safe_int(doc.get("file_size", 0)) / (1024 * 1024), 2),
                     status=str(doc.get("status", "")),
                     created_at=str(doc.get("created_at", "")),
                 )

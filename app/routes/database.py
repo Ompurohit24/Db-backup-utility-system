@@ -16,6 +16,7 @@ from app.schemas.database import (
     DatabaseConfigResponse,
 )
 from app.services import database_service
+from app.services import notification_service
 from app.utils.dependencies import get_current_user
 from app.utils.ownership import get_owner_user_id
 
@@ -58,6 +59,13 @@ async def test_connection(
 
         # ── Step 2: Connection FAILED → return error ─────────────────
         if not result.success:
+            await notification_service.create_notification(
+                user_id=current_user["user_id"],
+                event_type="database_connection_failed",
+                level="error",
+                title="Database Connection Failed",
+                message=f"Could not connect to '{payload.database_name}': {result.message}",
+            )
             return TestConnectionResponse(
                 success=False,
                 message=result.message,
@@ -80,6 +88,15 @@ async def test_connection(
             password=payload.password,
         )
 
+        await notification_service.create_notification(
+            user_id=current_user["user_id"],
+            event_type="database_connected",
+            level="success",
+            title="Database Connected",
+            message=f"Database '{payload.database_name}' connected and saved successfully.",
+            resource_id=str(doc.get("$id") or ""),
+        )
+
         return TestConnectionResponse(
             success=True,
             message="Connection successful. Database configuration saved.",
@@ -92,6 +109,13 @@ async def test_connection(
         )
 
     except Exception as e:
+        await notification_service.create_notification(
+            user_id=current_user.get("user_id", ""),
+            event_type="database_connection_error",
+            level="error",
+            title="Database Connection Error",
+            message=f"Unexpected error while connecting database: {e}",
+        )
         return JSONResponse(status_code=500, content={"error": str(e)})
 
 

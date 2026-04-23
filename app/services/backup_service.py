@@ -23,6 +23,7 @@ from app.config import (
 from app.logger import get_logger
 from app.services.database_service import get_user_database_decrypted
 from app.services import log_service
+from app.services import notification_service
 from app.services.metadata_service import update_metadata_async
 from app.utils.appwrite_normalize import normalize_row, normalize_row_collection
 from app.utils.backup_engine import run_backup, BackupResult, run_restore
@@ -41,6 +42,28 @@ restore_logger = get_logger("restore")
 error_logger = get_logger("error")
 
 
+async def _notify_user(
+    user_id: str,
+    event_type: str,
+    level: str,
+    title: str,
+    message: str,
+    resource_id: str = "",
+) -> None:
+    """Best-effort user notification emitter."""
+    try:
+        await notification_service.create_notification(
+            user_id=user_id,
+            event_type=event_type,
+            level=level,
+            title=title,
+            message=message,
+            resource_id=resource_id,
+        )
+    except Exception:
+        pass
+
+
 def _resolve_compression(stored: str | None, file_name: str) -> str:
     """Fallback compression inference for older records missing metadata."""
     if stored:
@@ -51,6 +74,11 @@ def _resolve_compression(stored: str | None, file_name: str) -> str:
     return "none"
 
 
+def _is_unknown_attribute_error(exc: Exception, field_name: str) -> bool:
+    text = str(exc).lower()
+    return "unknown attribute" in text and field_name.lower() in text
+
+
 async def _ensure_backup_attributes():
     global _backup_attrs_ensured
     if _backup_attrs_ensured or not BACKUPS_COLLECTION_ID:
@@ -59,13 +87,23 @@ async def _ensure_backup_attributes():
     def _create_string(key: str, size: int):
         try:
             if hasattr(tables, "create_text_column"):
-                tables.create_text_column(
-                    database_id=DATABASE_ID,
-                    table_id=BACKUPS_COLLECTION_ID,
-                    key=key,
-                    size=size,
-                    required=False,
-                )
+                try:
+                    # Newer SDKs: text columns generally don't require size.
+                    tables.create_text_column(
+                        database_id=DATABASE_ID,
+                        table_id=BACKUPS_COLLECTION_ID,
+                        key=key,
+                        required=False,
+                    )
+                except TypeError:
+                    # Backward compatibility for SDK variants that still accept size.
+                    tables.create_text_column(
+                        database_id=DATABASE_ID,
+                        table_id=BACKUPS_COLLECTION_ID,
+                        key=key,
+                        size=size,
+                        required=False,
+                    )
             else:
                 # Backward compatibility for older Appwrite SDKs.
                 tables.create_string_column(
@@ -87,16 +125,16 @@ async def _ensure_backup_attributes():
         await asyncio.to_thread(_create_string, "encryption", 50)
         await asyncio.to_thread(_create_string, "backup_type", 50)
         await asyncio.to_thread(_create_string, "base_backup_id", 255)
+        await asyncio.to_thread(_create_string, "duration_seconds", 50)
         _backup_attrs_ensured = True
-    except Exception:
+    except Exception as e:
         # Do not fail the request if attribute creation has permission issues.
-        pass
+        backup_logger.warning("Could not auto-ensure backup attributes: %s", e)
 
 
 async def _get_last_successful_backup(user_id: str, db_config_id: str) -> Optional[dict]:
     """Return latest successful backup row for a database config, if available."""
     base_queries = [
-        Query.equal("user_id", user_id),
         Query.equal("db_config_id", db_config_id),
         Query.equal("status", "success"),
         Query.limit(1),
@@ -107,14 +145,41 @@ async def _get_last_successful_backup(user_id: str, db_config_id: str) -> Option
             tables.list_rows,
             database_id=DATABASE_ID,
             table_id=BACKUPS_COLLECTION_ID,
-            queries=[*base_queries, Query.order_desc("created_at")],
+            queries=[Query.equal("user_id", user_id), *base_queries, Query.order_desc("created_at")],
         )
+    except AppwriteException as exc:
+        if "Attribute not found in schema: user_id" in str(exc):
+            try:
+                response = await asyncio.to_thread(
+                    tables.list_rows,
+                    database_id=DATABASE_ID,
+                    table_id=BACKUPS_COLLECTION_ID,
+                    queries=[
+                        Query.equal("owner_user_id", user_id),
+                        *base_queries,
+                        Query.order_desc("created_at"),
+                    ],
+                )
+            except AppwriteException:
+                response = await asyncio.to_thread(
+                    tables.list_rows,
+                    database_id=DATABASE_ID,
+                    table_id=BACKUPS_COLLECTION_ID,
+                    queries=[Query.equal("owner_user_id", user_id), *base_queries],
+                )
+        else:
+            response = await asyncio.to_thread(
+                tables.list_rows,
+                database_id=DATABASE_ID,
+                table_id=BACKUPS_COLLECTION_ID,
+                queries=[Query.equal("user_id", user_id), *base_queries],
+            )
     except Exception:
         response = await asyncio.to_thread(
             tables.list_rows,
             database_id=DATABASE_ID,
             table_id=BACKUPS_COLLECTION_ID,
-            queries=base_queries,
+            queries=[Query.equal("user_id", user_id), *base_queries],
         )
 
     rows = normalize_row_collection(response).get("rows", [])
@@ -183,6 +248,14 @@ async def trigger_backup(
         db_config_id,
         doc.get("database_name", ""),
     )
+    await _notify_user(
+        user_id=user_id,
+        event_type="backup_started",
+        level="info",
+        title="Backup Started",
+        message=f"Backup started for database '{doc.get('database_name', '')}'.",
+        resource_id=db_config_id,
+    )
 
     effective_backup_type, base_backup, backup_type_note = await _resolve_backup_type(
         backup_type,
@@ -224,6 +297,14 @@ async def trigger_backup(
             user_id,
             db_config_id,
             doc.get("database_name", ""),
+        )
+        await _notify_user(
+            user_id=user_id,
+            event_type="backup_failed",
+            level="error",
+            title="Backup Failed",
+            message=f"Backup failed for database '{doc.get('database_name', '')}': {e}",
+            resource_id=db_config_id,
         )
         end_dt = datetime.now(timezone.utc)
         if log_id:
@@ -354,7 +435,9 @@ async def trigger_backup(
     if not getattr(result, "encryption", None):
         result.encryption = "aes-256-gcm" if not encryption_error and result.success else "none"
 
-    now = datetime.now(timezone.utc).isoformat()
+    end_dt = datetime.now(timezone.utc)
+    now = end_dt.isoformat()
+    duration_seconds = (end_dt - start_dt).total_seconds()
 
     # Step 4 – persist metadata
     data = {
@@ -373,18 +456,37 @@ async def trigger_backup(
         "encryption":    getattr(result, "encryption", "none"),
         "backup_type":   effective_backup_type,
         "base_backup_id": base_backup_id,
+        "duration_seconds": str(round(duration_seconds, 3)),
         "status":        "success" if result.success else "failed",
         "error_message": "" if result.success else result.message,
         "created_at":    now,
     }
 
-    backup_row = await asyncio.to_thread(
-        tables.create_row,
-        database_id=DATABASE_ID,
-        table_id=BACKUPS_COLLECTION_ID,
-        row_id="unique()",
-        data=data,
-    )
+    try:
+        backup_row = await asyncio.to_thread(
+            tables.create_row,
+            database_id=DATABASE_ID,
+            table_id=BACKUPS_COLLECTION_ID,
+            row_id="unique()",
+            data=data,
+        )
+    except Exception as e:
+        # Hotfix for older tables that don't yet have duration_seconds.
+        if _is_unknown_attribute_error(e, "duration_seconds"):
+            backup_logger.warning(
+                "Missing duration_seconds column in backups table; retrying without it"
+            )
+            data_without_duration = dict(data)
+            data_without_duration.pop("duration_seconds", None)
+            backup_row = await asyncio.to_thread(
+                tables.create_row,
+                database_id=DATABASE_ID,
+                table_id=BACKUPS_COLLECTION_ID,
+                row_id="unique()",
+                data=data_without_duration,
+            )
+        else:
+            raise
     backup_row = normalize_row(backup_row)
 
     backup_logger.info(
@@ -397,7 +499,6 @@ async def trigger_backup(
         backup_row.get("file_size", ""),
     )
 
-    end_dt = datetime.now(timezone.utc)
     if log_id:
         try:
             await log_service.update_log_entry(
@@ -427,6 +528,31 @@ async def trigger_backup(
     except Exception:
         pass
 
+    if backup_row.get("status") == "success":
+        await _notify_user(
+            user_id=user_id,
+            event_type="backup_completed",
+            level="success",
+            title="Backup Completed",
+            message=(
+                f"Backup completed for '{doc.get('database_name', '')}' "
+                f"({backup_row.get('file_name', '')})."
+            ),
+            resource_id=str(backup_row.get("$id") or ""),
+        )
+    else:
+        await _notify_user(
+            user_id=user_id,
+            event_type="backup_failed",
+            level="error",
+            title="Backup Failed",
+            message=(
+                f"Backup failed for '{doc.get('database_name', '')}': "
+                f"{backup_row.get('error_message', result.message)}"
+            ),
+            resource_id=str(backup_row.get("$id") or ""),
+        )
+
     # Attach success/error message so routes can surface it
     backup_row["_result_message"] = result.message
     backup_row["_success"] = result.success
@@ -447,21 +573,26 @@ async def list_backups(
     """
     List backup records for a user, optionally filtered by db_config_id.
     """
-    queries = [
-        Query.equal("user_id", user_id),
-        Query.limit(limit),
-        Query.offset(offset),
-        Query.order_desc("created_at"),
-    ]
+    base_queries = [Query.limit(limit), Query.offset(offset), Query.order_desc("created_at")]
     if db_config_id:
-        queries.insert(1, Query.equal("db_config_id", db_config_id))
+        base_queries.insert(0, Query.equal("db_config_id", db_config_id))
 
-    response = await asyncio.to_thread(
-        tables.list_rows,
-        database_id=DATABASE_ID,
-        table_id=BACKUPS_COLLECTION_ID,
-        queries=queries,
-    )
+    try:
+        response = await asyncio.to_thread(
+            tables.list_rows,
+            database_id=DATABASE_ID,
+            table_id=BACKUPS_COLLECTION_ID,
+            queries=[Query.equal("user_id", user_id), *base_queries],
+        )
+    except AppwriteException as exc:
+        if "Attribute not found in schema: user_id" not in str(exc):
+            raise
+        response = await asyncio.to_thread(
+            tables.list_rows,
+            database_id=DATABASE_ID,
+            table_id=BACKUPS_COLLECTION_ID,
+            queries=[Query.equal("owner_user_id", user_id), *base_queries],
+        )
 
     return normalize_row_collection(response)
 
@@ -673,6 +804,15 @@ async def restore_backup_from_record(
         )
         return {"success": False, "message": "Database config not found or not accessible."}
 
+    await _notify_user(
+        user_id=user_id,
+        event_type="restore_started",
+        level="info",
+        title="Restore Started",
+        message=f"Restore started for database '{db_config.get('database_name', '')}'.",
+        resource_id=backup_id,
+    )
+
     try:
         log_row = await log_service.create_log_entry(
             user_id=user_id,
@@ -712,6 +852,14 @@ async def restore_backup_from_record(
                 )
             except Exception:
                 pass
+        await _notify_user(
+            user_id=user_id,
+            event_type="restore_failed",
+            level="error",
+            title="Restore Failed",
+            message=f"Restore failed: {e}",
+            resource_id=backup_id,
+        )
         raise
 
     temp_path = await _write_temp_file(doc.get("file_name", "backup"), data)
@@ -784,6 +932,19 @@ async def restore_backup_from_record(
         except Exception:
             pass
 
+    await _notify_user(
+        user_id=user_id,
+        event_type="restore_completed" if result.success else "restore_failed",
+        level="success" if result.success else "error",
+        title="Restore Completed" if result.success else "Restore Failed",
+        message=(
+            f"Restore completed for '{db_config.get('database_name', '')}'."
+            if result.success
+            else f"Restore failed for '{db_config.get('database_name', '')}': {result.message}"
+        ),
+        resource_id=backup_id,
+    )
+
     return {"success": result.success, "message": result.message}
 
 
@@ -815,6 +976,15 @@ async def restore_backup_from_upload(
         )
         return {"success": False, "message": "Database config not found or not accessible."}
 
+    await _notify_user(
+        user_id=user_id,
+        event_type="restore_started",
+        level="info",
+        title="Restore Started",
+        message=f"Restore started for database '{db_config.get('database_name', '')}'.",
+        resource_id=db_config_id,
+    )
+
     try:
         log_row = await log_service.create_log_entry(
             user_id=user_id,
@@ -838,6 +1008,14 @@ async def restore_backup_from_upload(
             user_id,
             db_config_id,
         )
+        await _notify_user(
+            user_id=user_id,
+            event_type="restore_failed",
+            level="error",
+            title="Restore Failed",
+            message="Restore failed: uploaded file is empty.",
+            resource_id=db_config_id,
+        )
         return {"success": False, "message": "Uploaded file is empty."}
 
     # Handle encrypted uploads (e.g., files downloaded from storage ending with .enc)
@@ -848,6 +1026,14 @@ async def restore_backup_from_upload(
     if encrypted_upload:
         key = get_backup_key_optional()
         if not key:
+            await _notify_user(
+                user_id=user_id,
+                event_type="restore_failed",
+                level="error",
+                title="Restore Failed",
+                message="Restore failed: encryption key is not configured.",
+                resource_id=db_config_id,
+            )
             return {"success": False, "message": "Encryption key not configured for restore."}
 
         try:
@@ -890,6 +1076,15 @@ async def restore_backup_from_upload(
                 detail = "File not found or inaccessible."
             else:
                 detail = f"{error_msg}. File may be corrupted or encryption key incorrect."
+
+            await _notify_user(
+                user_id=user_id,
+                event_type="restore_failed",
+                level="error",
+                title="Restore Failed",
+                message=f"Restore failed during decryption: {detail}",
+                resource_id=db_config_id,
+            )
 
             return {"success": False, "message": detail}
 
@@ -964,6 +1159,19 @@ async def restore_backup_from_upload(
             )
         except Exception:
             pass
+
+    await _notify_user(
+        user_id=user_id,
+        event_type="restore_completed" if result.success else "restore_failed",
+        level="success" if result.success else "error",
+        title="Restore Completed" if result.success else "Restore Failed",
+        message=(
+            f"Restore completed for '{db_config.get('database_name', '')}'."
+            if result.success
+            else f"Restore failed for '{db_config.get('database_name', '')}': {result.message}"
+        ),
+        resource_id=db_config_id,
+    )
 
 
     return {"success": result.success, "message": result.message}

@@ -7,6 +7,7 @@ from datetime import datetime, timezone
 from typing import Optional
 
 from cryptography.fernet import InvalidToken
+from appwrite.exception import AppwriteException
 from appwrite.query import Query
 
 from app.core.appwrite_client import tables   # ← new TablesDB API
@@ -84,16 +85,25 @@ async def list_user_databases(
     user_id: str, limit: int = 25, offset: int = 0,
 ) -> dict:
     """List all saved database configs belonging to a user."""
-    response = await asyncio.to_thread(
-        tables.list_rows,
-        database_id=DATABASE_ID,
-        table_id=USER_DATABASES_COLLECTION_ID,
-        queries=[
-            Query.equal("user_id", user_id),
-            Query.limit(limit),
-            Query.offset(offset),
-        ],
-    )
+    base_queries = [Query.limit(limit), Query.offset(offset)]
+
+    try:
+        response = await asyncio.to_thread(
+            tables.list_rows,
+            database_id=DATABASE_ID,
+            table_id=USER_DATABASES_COLLECTION_ID,
+            queries=[Query.equal("user_id", user_id), *base_queries],
+        )
+    except AppwriteException as exc:
+        # Legacy deployments may still use owner_user_id.
+        if "Attribute not found in schema: user_id" not in str(exc):
+            raise
+        response = await asyncio.to_thread(
+            tables.list_rows,
+            database_id=DATABASE_ID,
+            table_id=USER_DATABASES_COLLECTION_ID,
+            queries=[Query.equal("owner_user_id", user_id), *base_queries],
+        )
 
     return normalize_row_collection(response)
 

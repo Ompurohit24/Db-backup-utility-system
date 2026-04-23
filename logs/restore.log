@@ -141,3 +141,53 @@ LINE 2:   id integer DEFAULT nextval('employees_id_seq'::regclass) N...
 2026-04-14 23:43:16,775 | INFO | restore | Decryption started for restore backup_id=69de71dd73e818b4527a
 2026-04-14 23:43:16,776 | INFO | restore | Decryption completed for restore backup_id=69de71dd73e818b4527a
 2026-04-14 23:43:17,429 | INFO | restore | Restore-from-record completed user_id=69c01516df31230a0ffc backup_id=69de71dd73e818b4527a status=success message=Restore completed successfully.
+2026-04-18 12:21:24,221 | INFO | restore | Decryption started for restore backup_id=69de703a42fd22fa427c
+2026-04-18 12:21:24,231 | INFO | restore | Decryption completed for restore backup_id=69de703a42fd22fa427c
+2026-04-18 12:21:27,137 | INFO | restore | Decryption started for restore backup_id=69de703a42fd22fa427c
+2026-04-18 12:21:27,138 | INFO | restore | Decryption completed for restore backup_id=69de703a42fd22fa427c
+2026-04-18 12:22:02,614 | INFO | restore | Decryption started for restore backup_id=69de703a42fd22fa427c
+2026-04-18 12:22:02,615 | INFO | restore | Decryption completed for restore backup_id=69de703a42fd22fa427c
+2026-04-18 14:17:14,143 | INFO | restore | Decryption started for restore backup_id=69de703a42fd22fa427c
+2026-04-18 14:17:14,178 | INFO | restore | Decryption completed for restore backup_id=69de703a42fd22fa427c
+2026-04-18 14:17:50,562 | INFO | restore | Decryption started for restore backup_id=69de703a42fd22fa427c
+2026-04-18 14:17:50,563 | INFO | restore | Decryption completed for restore backup_id=69de703a42fd22fa427c
+2026-04-18 14:17:53,350 | INFO | restore | Decryption started for restore backup_id=69de703a42fd22fa427c
+2026-04-18 14:17:53,350 | INFO | restore | Decryption completed for restore backup_id=69de703a42fd22fa427c
+2026-04-18 14:26:03,537 | INFO | restore | Decryption started for restore backup_id=69d77d862e845d2139ef
+2026-04-18 14:26:03,538 | INFO | restore | Decryption completed for restore backup_id=69d77d862e845d2139ef
+2026-04-18 21:44:40,232 | INFO | restore | Restore-from-record started user_id=69c01516df31230a0ffc backup_id=69e3adcb99d6baa0ed37
+2026-04-18 21:44:42,088 | INFO | restore | Decryption started for restore backup_id=69e3adcb99d6baa0ed37
+2026-04-18 21:44:42,103 | INFO | restore | Decryption completed for restore backup_id=69e3adcb99d6baa0ed37
+2026-04-18 21:44:42,791 | INFO | restore | Restore-from-record completed user_id=69c01516df31230a0ffc backup_id=69e3adcb99d6baa0ed37 status=failed message=can't execute an empty query
+2026-04-18 21:45:10,020 | INFO | restore | Restore-from-record started user_id=69c01516df31230a0ffc backup_id=69e3adcb99d6baa0ed37
+2026-04-18 21:45:11,764 | INFO | restore | Decryption started for restore backup_id=69e3adcb99d6baa0ed37
+2026-04-18 21:45:11,764 | INFO | restore | Decryption completed for restore backup_id=69e3adcb99d6baa0ed37
+2026-04-18 21:45:12,456 | INFO | restore | Restore-from-record completed user_id=69c01516df31230a0ffc backup_id=69e3adcb99d6baa0ed37 status=failed message=can't execute an empty query
+2026-04-18 21:45:25,255 | INFO | restore | Restore-from-record started user_id=69c01516df31230a0ffc backup_id=69e3ac8b41062a2007df
+2026-04-18 21:45:27,655 | INFO | restore | Decryption started for restore backup_id=69e3ac8b41062a2007df
+2026-04-18 21:45:27,656 | INFO | restore | Decryption completed for restore backup_id=69e3ac8b41062a2007df
+2026-04-18 21:45:28,380 | INFO | restore | Restore-from-record completed user_id=69c01516df31230a0ffc backup_id=69e3ac8b41062a2007df status=success message=Restore completed successfully.
+2026-04-18 21:47:58,155 | INFO | restore | Decryption started for restore backup_id=69e3adcb99d6baa0ed37
+2026-04-18 21:47:58,156 | INFO | restore | Decryption completed for restore backup_id=69e3adcb99d6baa0ed37
+2026-04-18 22:32:06,192 | INFO | restore | Decryption started for restore backup_id=69e3b8d53d3756a70aa7
+2026-04-18 22:32:06,193 | INFO | restore | Decryption completed for restore backup_id=69e3b8d53d3756a70aa7
+2026-04-19 21:59:15,657 | INFO | restore | Decryption started for restore backup_id=69e4d1d2a2355bf91263
+2026-04-19 21:59:15,688 | INFO | restore | Decryption completed for restore backup_id=69e4d1d2a2355bf91263
+2026-04-20 18:40:56,873 | INFO | restore | Restore-from-record started user_id=69c01516df31230a0ffc backup_id=69e3ac8b41062a2007df
+2026-04-20 18:40:58,142 | INFO | restore | Decryption started for restore backup_id=69e3ac8b41062a2007df
+2026-04-20 18:40:58,159 | INFO | restore | Decryption completed for restore backup_id=69e3ac8b41062a2007df
+2026-04-20 18:40:58,700 | INFO | restore | Restore-from-record completed user_id=69c01516df31230a0ffc backup_id=69e3ac8b41062a2007df status=success message=Restore completed successfully.
+2026-04-20 19:01:10,072 | INFO | restore | Decryption started for restore backup_id=69e62353025c8895f92f
+2026-04-20 19:01:10,072 | INFO | restore | Decryption completed for restore backup_id=69e62353025c8895f92f
+2026-04-20 19:38:53,214 | INFO | restore | Restore-from-record started user_id=69c01516df31230a0ffc backup_id=69e503a781e198cd6998
+2026-04-20 19:38:54,318 | INFO | restore | Decryption started for restore backup_id=69e503a781e198cd6998
+2026-04-20 19:38:54,319 | INFO | restore | Decryption completed for restore backup_id=69e503a781e198cd6998
+2026-04-20 19:38:54,803 | INFO | restore | Restore-from-record completed user_id=69c01516df31230a0ffc backup_id=69e503a781e198cd6998 status=success message=Restore completed successfully.
+2026-04-20 22:02:41,032 | INFO | restore | Decryption started for restore backup_id=69e64f9ed7919b0c22e5
+2026-04-20 22:02:41,048 | INFO | restore | Decryption completed for restore backup_id=69e64f9ed7919b0c22e5
+2026-04-21 12:36:22,321 | INFO | restore | Decryption started for restore backup_id=69e715e557485bac82c0
+2026-04-21 12:36:22,349 | INFO | restore | Decryption completed for restore backup_id=69e715e557485bac82c0
+2026-04-21 12:37:38,664 | INFO | restore | Restore-from-record started user_id=69c01516df31230a0ffc backup_id=69e721f99578f33ab941
+2026-04-21 12:37:39,888 | INFO | restore | Decryption started for restore backup_id=69e721f99578f33ab941
+2026-04-21 12:37:39,888 | INFO | restore | Decryption completed for restore backup_id=69e721f99578f33ab941
+2026-04-21 12:37:40,425 | INFO | restore | Restore-from-record completed user_id=69c01516df31230a0ffc backup_id=69e721f99578f33ab941 status=success message=Restore completed successfully.

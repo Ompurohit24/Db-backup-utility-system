@@ -6,13 +6,11 @@ Manages file uploads, downloads, and metadata tracking.
 import asyncio
 import os
 import tempfile
-from datetime import datetime, timezone
-from pathlib import Path
 from typing import Optional, Tuple
 
 from appwrite.input_file import InputFile
 
-from app.config import APPWRITE_STORAGE_BUCKET_ID
+from app.config import APPWRITE_STORAGE_BUCKET_ID, APPWRITE_TOTAL_STORAGE_BYTES
 from app.core.appwrite_client import storage
 from app.logger import get_logger
 from app.utils.compression import gzip_compress, gzip_decompress
@@ -20,6 +18,23 @@ from app.utils.file_encryption import encrypt_file, decrypt_bytes
 from app.utils.key_manager import get_backup_key_optional
 
 logger = get_logger("storage")
+
+
+def _safe_int(value) -> Optional[int]:
+    try:
+        if value is None or value == "":
+            return None
+        return int(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def format_storage_size(bytes_value: Optional[int]) -> str:
+    """Human-readable storage label used by dashboard/monitoring APIs."""
+    value = _safe_int(bytes_value) or 0
+    if value >= 1024 ** 3:
+        return f"{round(value / (1024 ** 3), 2)} GB"
+    return f"{round(value / (1024 ** 2), 2)} MB"
 
 
 class StorageService:
@@ -303,4 +318,42 @@ class StorageService:
         except Exception as e:
             logger.error("Failed to list files: %s", e)
             return None
+
+
+async def get_total_storage_capacity_bytes() -> tuple[Optional[int], str]:
+    """
+    Returns (capacity_bytes, source) where source is one of: env, appwrite, unknown.
+    """
+    env_value = _safe_int(APPWRITE_TOTAL_STORAGE_BYTES)
+    if env_value and env_value > 0:
+        return env_value, "env"
+
+    if not APPWRITE_STORAGE_BUCKET_ID:
+        return None, "unknown"
+
+    # Best effort: Appwrite SDK versions differ; inspect known bucket fields if available.
+    try:
+        if hasattr(storage, "get_bucket"):
+            bucket = await asyncio.to_thread(
+                storage.get_bucket,
+                bucket_id=APPWRITE_STORAGE_BUCKET_ID,
+            )
+            data = bucket if isinstance(bucket, dict) else getattr(bucket, "_data", {})
+            if not isinstance(data, dict):
+                data = {}
+
+            for key in (
+                "maximumBucketSize",
+                "maximum_bucket_size",
+                "maxBucketSize",
+                "max_bucket_size",
+            ):
+                val = _safe_int(data.get(key))
+                if val and val > 0:
+                    return val, "appwrite"
+    except Exception:
+        return None, "unknown"
+
+    return None, "unknown"
+
 

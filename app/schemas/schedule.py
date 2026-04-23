@@ -64,6 +64,7 @@ class ScheduleOut(BaseModel):
     cron_expression: str
     timezone: str
     enabled: bool
+    status: str
     description: Optional[str] = None
     next_run_time: Optional[datetime] = None
     createdAt: Optional[datetime] = None

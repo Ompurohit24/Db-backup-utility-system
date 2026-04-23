@@ -9,6 +9,7 @@ from app.routes.database import router as database_router
 from app.routes.backup import router as backup_router
 from app.routes.schedule import router as schedule_router
 from app.routes.admin import router as admin_router
+from app.routes.notifications import router as notifications_router
 from app.services.schedule_service import load_active_schedules
 from app.utils.scheduler import scheduler_shutdown, scheduler_startup
 from fastapi.middleware.cors import CORSMiddleware
@@ -32,6 +33,7 @@ app.include_router(database_router)
 app.include_router(backup_router)
 app.include_router(schedule_router)
 app.include_router(admin_router)
+app.include_router(notifications_router)
 
 
 @app.get("/")
@@ -45,7 +47,8 @@ origins = [
     "http://127.0.0.1:5501",
     "http://localhost:5501",
     "http://127.0.0.1:5500",
-    "http://localhost:5500"   # Live Server (VS Code)
+    "http://localhost:5500",
+    "https://vaultdb.live"# Live Server (VS Code)
 ]
 
 # ✅ Add CORS middleware

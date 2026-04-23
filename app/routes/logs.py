@@ -33,12 +33,17 @@ async def all_logs(current_user: dict = Depends(require_admin_user)):
     for file in [
         "logs/app.log",
         "logs/backup.log",
-        "logs/restore.log",
-        "logs/error.log"
+        "logs/restore.log"
     ]:
         try:
             with open(file, "r", encoding="utf-8") as f:
-                logs.extend([line.strip() for line in f.readlines()])
+                logs.extend(
+                    [
+                        line.strip()
+                        for line in f.readlines()
+                        if "| ERROR |" not in line
+                    ]
+                )
         except:
             pass
 

@@ -45,6 +45,7 @@ class UserDashboardBackup(BaseModel):
     database_name: str
     file_name: str
     file_size: int
+    file_size_mb: float = 0
     status: str
     created_at: str
 

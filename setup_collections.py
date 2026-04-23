@@ -16,6 +16,7 @@ from app.config import (
     APPWRITE_STORAGE_BUCKET_ID,
     RESTORES_COLLECTION_ID,
     LOGS_COLLECTION_ID,
+    NOTIFICATIONS_COLLECTION_ID,
 )
 import time
 
@@ -104,6 +105,8 @@ def setup_users_collection():
         ("user_id",       255,  True),
         ("email",         255,  True),
         ("name",          255,  True),
+        ("role",          50,   False),
+        ("status",        50,   False),
         ("password_hash", 512,  True),
         ("phone",         50,   False),
         ("bio",           1024, False),
@@ -151,6 +154,7 @@ def setup_backups_collection():
         ("encryption",    50,   False),
         ("backup_type",   50,   False),
         ("base_backup_id", 255, False),
+        ("duration_seconds", 50, False),
         ("status",        50,   True),   # success | failed
         ("error_message", 2048, False),
         ("created_at",    50,   True),
@@ -211,6 +215,41 @@ def setup_logs_collection():
     create_string_attrs(LOGS_COLLECTION_ID, string_attrs)
 
 
+def setup_notifications_collection():
+    """Set up the notifications collection for user notification feed."""
+    if not NOTIFICATIONS_COLLECTION_ID:
+        print("⚠️  NOTIFICATIONS_COLLECTION_ID not set. Skipping notifications collection setup.")
+        return
+
+    print(f"\n🔧  Setting up collection: '{NOTIFICATIONS_COLLECTION_ID}'")
+    create_collection(NOTIFICATIONS_COLLECTION_ID, "Notifications")
+
+    string_attrs = [
+        ("user_id", 255, True),
+        ("event_type", 100, True),
+        ("level", 20, True),
+        ("title", 255, True),
+        ("message", 2048, True),
+        ("resource_id", 255, False),
+    ]
+    create_string_attrs(NOTIFICATIONS_COLLECTION_ID, string_attrs)
+
+    try:
+        databases.create_boolean_attribute(
+            database_id=DATABASE_ID,
+            collection_id=NOTIFICATIONS_COLLECTION_ID,
+            key="is_read",
+            required=False,
+            default=False,
+        )
+        print("  ✅  Boolean attribute 'is_read' created.")
+    except Exception as e:
+        if "already exists" in str(e).lower():
+            print("  ℹ️  Attribute 'is_read' already exists. Skipping.")
+        else:
+            print(f"  ❌  Error creating 'is_read': {e}")
+
+
 def setup_storage_bucket():
     """Set up the Appwrite storage bucket for backup files."""
     if not APPWRITE_STORAGE_BUCKET_ID:
@@ -243,6 +282,7 @@ def main():
     setup_backups_collection()
     setup_restores_collection()
     setup_logs_collection()
+    setup_notifications_collection()
     setup_storage_bucket()
 
     print("\n⏳  Waiting 3 seconds for attributes to become available...")

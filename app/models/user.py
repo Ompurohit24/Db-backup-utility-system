@@ -8,6 +8,8 @@ class UserDocument(BaseModel):
     email: EmailStr
     name: str
     password_hash: str = ""
+    role: str = "user"
+    status: str = "active"
     phone: Optional[str] = None
     bio: Optional[str] = None
     is_active: bool = True
