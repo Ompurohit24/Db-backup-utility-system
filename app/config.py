@@ -36,7 +36,6 @@ ENCRYPTION_KEY = os.getenv("ENCRYPTION_KEY")
 
 # Encryption key for backup files (base64-encoded 32 bytes for AES-256)
 BACKUP_ENCRYPTION_KEY = os.getenv("BACKUP_ENCRYPTION_KEY")
-BACKUP_ENCRYPTION_KEYS = os.getenv("BACKUP_ENCRYPTION_KEYS", "")
 
 # Frontend route used by Appwrite email verification links.
 APPWRITE_EMAIL_VERIFICATION_REDIRECT_URL = os.getenv(

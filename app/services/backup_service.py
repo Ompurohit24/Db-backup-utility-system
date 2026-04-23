@@ -31,7 +31,7 @@ from app.utils.backup_engine import run_backup, BackupResult, run_restore
 from app.utils.compression import gzip_compress, gzip_decompress, is_gzip_name
 from app.utils.ownership import get_owner_user_id
 from app.utils.file_encryption import encrypt_file, decrypt_bytes
-from app.utils.key_manager import get_backup_key_optional, get_backup_key_candidates_optional
+from app.utils.key_manager import get_backup_key_optional
 
 
 # Ensure new backup attributes exist (for deployments created before compression fields were added).
@@ -717,31 +717,14 @@ async def get_backup_file_bytes(doc: dict) -> bytes:
 
     # Decrypt if needed
     if doc.get("encryption") == "aes-256-gcm":
-        keys = get_backup_key_candidates_optional()
-        if not keys:
+        key = get_backup_key_optional()
+        if not key:
             raise RuntimeError("Backup encryption key is not configured for decryption.")
         try:
             restore_logger.info(
                 "Decryption started for restore backup_id=%s", doc.get("$id", "")
             )
-            last_error: Exception | None = None
-            encrypted_payload = data
-            decrypted_payload: bytes | None = None
-            for key in keys:
-                try:
-                    decrypted_payload = await asyncio.to_thread(decrypt_bytes, encrypted_payload, key)
-                    last_error = None
-                    break
-                except Exception as exc:
-                    last_error = exc
-
-            if last_error is not None:
-                raise last_error
-
-            if decrypted_payload is None:
-                raise RuntimeError("Decryption failed - payload could not be decrypted.")
-
-            data = decrypted_payload
+            data = await asyncio.to_thread(decrypt_bytes, data, key)
 
             restore_logger.info(
                 "Decryption completed for restore backup_id=%s", doc.get("$id", "")
@@ -1076,8 +1059,8 @@ async def restore_backup_from_upload(
     processed_name = original_name[:-4] if encrypted_upload else original_name
 
     if encrypted_upload:
-        keys = get_backup_key_candidates_optional()
-        if not keys:
+        key = get_backup_key_optional()
+        if not key:
             await _notify_user(
                 user_id=user_id,
                 event_type="restore_failed",
@@ -1096,25 +1079,8 @@ async def restore_backup_from_upload(
                 original_name,
             )
 
-            # Try current key first, then optional legacy keys for rotated-key restores.
-            last_error: Exception | None = None
-            encrypted_payload = file_bytes
-            decrypted_payload: bytes | None = None
-            for key in keys:
-                try:
-                    decrypted_payload = await asyncio.to_thread(decrypt_bytes, encrypted_payload, key)
-                    last_error = None
-                    break
-                except Exception as exc:
-                    last_error = exc
-
-            if last_error is not None:
-                raise last_error
-
-            if decrypted_payload is None:
-                raise RuntimeError("Decryption failed - payload could not be decrypted.")
-
-            file_bytes = decrypted_payload
+            # Decrypt bytes directly without temp files
+            file_bytes = await asyncio.to_thread(decrypt_bytes, file_bytes, key)
 
             restore_logger.info(
                 "Decryption completed for uploaded file user_id=%s db_config_id=%s file=%s",
