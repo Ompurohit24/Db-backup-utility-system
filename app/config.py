@@ -40,7 +40,7 @@ BACKUP_ENCRYPTION_KEY = os.getenv("BACKUP_ENCRYPTION_KEY")
 # Frontend route used by Appwrite email verification links.
 APPWRITE_EMAIL_VERIFICATION_REDIRECT_URL = os.getenv(
 	"APPWRITE_EMAIL_VERIFICATION_REDIRECT_URL",
-	"https://www.vaultdb.live/verify",
+	"https://api.vaultdb.live/verify",
 )
 
 APPWRITE_PASSWORD_RECOVERY_REDIRECT_URL = os.getenv(
