@@ -23,18 +23,20 @@ from app.config import (
 from app.logger import get_logger
 from app.services.database_service import get_user_database_decrypted
 from app.services import log_service
-from app.services import notification_service
+#from app.services import notification_service
+import app.services.notification_service as notification_service
 from app.services.metadata_service import update_metadata_async
 from app.utils.appwrite_normalize import normalize_row, normalize_row_collection
 from app.utils.backup_engine import run_backup, BackupResult, run_restore
 from app.utils.compression import gzip_compress, gzip_decompress, is_gzip_name
 from app.utils.ownership import get_owner_user_id
-from app.utils.file_encryption import encrypt_file, decrypt_bytes, decrypt_file
-from app.utils.key_manager import get_backup_key_optional
+from app.utils.file_encryption import encrypt_file, decrypt_bytes
+from app.utils.key_manager import get_backup_key_optional, get_backup_key_candidates_optional
 
 
 # Ensure new backup attributes exist (for deployments created before compression fields were added).
 _backup_attrs_ensured = False
+_GZIP_MAGIC = b"\x1f\x8b"
 
 # Scoped loggers
 backup_logger = get_logger("backup")
@@ -86,25 +88,24 @@ async def _ensure_backup_attributes():
 
     def _create_string(key: str, size: int):
         try:
-            if hasattr(tables, "create_text_column"):
-                try:
-                    # Newer SDKs: text columns generally don't require size.
-                    tables.create_text_column(
-                        database_id=DATABASE_ID,
-                        table_id=BACKUPS_COLLECTION_ID,
-                        key=key,
-                        required=False,
-                    )
-                except TypeError:
-                    # Backward compatibility for SDK variants that still accept size.
-                    tables.create_text_column(
-                        database_id=DATABASE_ID,
-                        table_id=BACKUPS_COLLECTION_ID,
-                        key=key,
-                        size=size,
-                        required=False,
-                    )
-            else:
+            try:
+                # Newer SDKs: text columns generally don't require size.
+                tables.create_text_column(
+                    database_id=DATABASE_ID,
+                    table_id=BACKUPS_COLLECTION_ID,
+                    key=key,
+                    required=False,
+                )
+            except TypeError:
+                # Backward compatibility for SDK variants that still accept size.
+                tables.create_text_column(
+                    database_id=DATABASE_ID,
+                    table_id=BACKUPS_COLLECTION_ID,
+                    key=key,
+                    size=size,
+                    required=False,
+                )
+            except AttributeError:
                 # Backward compatibility for older Appwrite SDKs.
                 tables.create_string_column(
                     database_id=DATABASE_ID,
@@ -130,6 +131,52 @@ async def _ensure_backup_attributes():
     except Exception as e:
         # Do not fail the request if attribute creation has permission issues.
         backup_logger.warning("Could not auto-ensure backup attributes: %s", e)
+
+
+def _looks_like_gzip(data: bytes) -> bool:
+    return bool(data) and len(data) >= 2 and data[:2] == _GZIP_MAGIC
+
+
+async def _safe_remove_file(path: str, retries: int = 5, delay_seconds: float = 0.15) -> None:
+    """Delete a local file with retries to handle transient Windows file locks."""
+    if not path:
+        return
+    for attempt in range(retries):
+        try:
+            os.remove(path)
+            return
+        except FileNotFoundError:
+            return
+        except PermissionError:
+            if attempt == retries - 1:
+                return
+            await asyncio.sleep(delay_seconds)
+        except OSError:
+            if attempt == retries - 1:
+                return
+            await asyncio.sleep(delay_seconds)
+
+
+async def _upload_backup_file_with_retries(file_path: str, retries: int = 3) -> dict:
+    last_error: Exception | None = None
+    for attempt in range(retries):
+        try:
+            upload = await asyncio.to_thread(
+                storage.create_file,
+                bucket_id=APPWRITE_STORAGE_BUCKET_ID,
+                file_id="unique()",
+                file=InputFile.from_path(file_path),
+            )
+            if hasattr(upload, "to_dict"):
+                upload = upload.to_dict()
+            if hasattr(upload, "model_dump"):
+                upload = upload.model_dump(by_alias=True)
+            return upload if isinstance(upload, dict) else {}
+        except Exception as exc:
+            last_error = exc
+            if attempt < retries - 1:
+                await asyncio.sleep(0.5 * (attempt + 1))
+    raise last_error or RuntimeError("Storage upload failed")
 
 
 async def _get_last_successful_backup(user_id: str, db_config_id: str) -> Optional[dict]:
@@ -334,10 +381,7 @@ async def trigger_backup(
             compressed_size = compressed_path.stat().st_size
 
             # remove uncompressed source to save space
-            try:
-                os.remove(source_path)
-            except FileNotFoundError:
-                pass
+            await _safe_remove_file(str(source_path))
 
             result.file_path = str(compressed_path)
             result.file_name = compressed_path.name
@@ -362,13 +406,12 @@ async def trigger_backup(
         else:
             try:
                 source_path = Path(result.file_path)
+                if not source_path.exists():
+                    raise FileNotFoundError(f"Backup file does not exist: {source_path}")
                 encrypted_path = source_path.with_suffix(source_path.suffix + ".enc")
                 await asyncio.to_thread(encrypt_file, source_path, encrypted_path, key)
 
-                try:
-                    os.remove(source_path)
-                except FileNotFoundError:
-                    pass
+                await _safe_remove_file(str(source_path))
 
                 result.file_path = str(encrypted_path)
                 result.file_name = encrypted_path.name
@@ -395,24 +438,12 @@ async def trigger_backup(
     storage_bucket = ""
     if result.success and result.file_path and APPWRITE_STORAGE_BUCKET_ID:
         try:
-            upload = await asyncio.to_thread(
-                storage.create_file,
-                bucket_id=APPWRITE_STORAGE_BUCKET_ID,
-                file_id="unique()",
-                file=InputFile.from_path(result.file_path),
-            )
-            if hasattr(upload, "to_dict"):
-                upload = upload.to_dict()
-            if hasattr(upload, "model_dump"):
-                upload = upload.model_dump(by_alias=True)
-            file_id = upload.get("$id", "") if isinstance(upload, dict) else ""
+            upload = await _upload_backup_file_with_retries(result.file_path)
+            file_id = upload.get("$id", "")
             storage_bucket = APPWRITE_STORAGE_BUCKET_ID
 
             # Remove local temp file after successful upload to storage.
-            try:
-                os.remove(result.file_path)
-            except FileNotFoundError:
-                pass
+            await _safe_remove_file(result.file_path)
             result.file_path = ""
         except Exception as e:
             result.success = False
@@ -669,6 +700,7 @@ async def delete_backup(backup_id: str, delete_file: bool = False) -> None:
 
 async def get_backup_file_bytes(doc: dict) -> bytes:
     """Return backup file content from Appwrite Storage or local fallback."""
+    data: bytes = b""
     if doc.get("file_id") and doc.get("storage_bucket"):
         data = await asyncio.to_thread(
             storage.get_file_download,
@@ -685,14 +717,32 @@ async def get_backup_file_bytes(doc: dict) -> bytes:
 
     # Decrypt if needed
     if doc.get("encryption") == "aes-256-gcm":
-        key = get_backup_key_optional()
-        if not key:
+        keys = get_backup_key_candidates_optional()
+        if not keys:
             raise RuntimeError("Backup encryption key is not configured for decryption.")
         try:
             restore_logger.info(
                 "Decryption started for restore backup_id=%s", doc.get("$id", "")
             )
-            data = await asyncio.to_thread(decrypt_bytes, data, key)
+            last_error: Exception | None = None
+            encrypted_payload = data
+            decrypted_payload: bytes | None = None
+            for key in keys:
+                try:
+                    decrypted_payload = await asyncio.to_thread(decrypt_bytes, encrypted_payload, key)
+                    last_error = None
+                    break
+                except Exception as exc:
+                    last_error = exc
+
+            if last_error is not None:
+                raise last_error
+
+            if decrypted_payload is None:
+                raise RuntimeError("Decryption failed - payload could not be decrypted.")
+
+            data = decrypted_payload
+
             restore_logger.info(
                 "Decryption completed for restore backup_id=%s", doc.get("$id", "")
             )
@@ -711,7 +761,7 @@ async def get_backup_file_bytes(doc: dict) -> bytes:
             elif "too small" in error_msg:
                 raise RuntimeError("Backup file is corrupted or incomplete (too small).") from e
             elif "authentication" in error_msg or "tag" in error_msg:
-                raise RuntimeError("Backup file authentication failed - file may be corrupted or encryption key may be incorrect.") from e
+                raise RuntimeError("Backup file authentication failed - file may be corrupted, or encryption key may be incorrect.") from e
             elif "no such file" in error_msg or "not found" in error_msg:
                 raise RuntimeError("Backup file not found or inaccessible.") from e
             else:
@@ -737,6 +787,7 @@ async def _prepare_restore_file(
     file_name: str,
     compression: str,
     original_file_name: Optional[str] = None,
+    file_bytes: Optional[bytes] = None,
 ) -> tuple[str, str, Optional[str]]:
     """
     Decompress the temp file if needed and return (path, file_name, extra_path_for_cleanup).
@@ -746,7 +797,7 @@ async def _prepare_restore_file(
     working_name = file_name
     decompressed_path: Optional[str] = None
 
-    if compression == "gzip" or is_gzip_name(file_name):
+    if compression == "gzip" or is_gzip_name(file_name) or _looks_like_gzip(file_bytes or b""):
         target_name = original_file_name or os.path.splitext(file_name)[0]
         decompressed = await asyncio.to_thread(
             gzip_decompress,
@@ -869,6 +920,7 @@ async def restore_backup_from_record(
         file_name=doc.get("file_name", "backup"),
         compression=compression,
         original_file_name=doc.get("original_file_name") or doc.get("file_name", ""),
+        file_bytes=data,
     )
 
     result = await run_restore(
@@ -1024,8 +1076,8 @@ async def restore_backup_from_upload(
     processed_name = original_name[:-4] if encrypted_upload else original_name
 
     if encrypted_upload:
-        key = get_backup_key_optional()
-        if not key:
+        keys = get_backup_key_candidates_optional()
+        if not keys:
             await _notify_user(
                 user_id=user_id,
                 event_type="restore_failed",
@@ -1044,8 +1096,25 @@ async def restore_backup_from_upload(
                 original_name,
             )
 
-            # Decrypt bytes directly without temp files
-            file_bytes = await asyncio.to_thread(decrypt_bytes, file_bytes, key)
+            # Try current key first, then optional legacy keys for rotated-key restores.
+            last_error: Exception | None = None
+            encrypted_payload = file_bytes
+            decrypted_payload: bytes | None = None
+            for key in keys:
+                try:
+                    decrypted_payload = await asyncio.to_thread(decrypt_bytes, encrypted_payload, key)
+                    last_error = None
+                    break
+                except Exception as exc:
+                    last_error = exc
+
+            if last_error is not None:
+                raise last_error
+
+            if decrypted_payload is None:
+                raise RuntimeError("Decryption failed - payload could not be decrypted.")
+
+            file_bytes = decrypted_payload
 
             restore_logger.info(
                 "Decryption completed for uploaded file user_id=%s db_config_id=%s file=%s",
@@ -1098,6 +1167,7 @@ async def restore_backup_from_upload(
         file_name=processed_name or "upload",
         compression=compression,
         original_file_name=original_name_guess,
+        file_bytes=file_bytes,
     )
 
     result = await run_restore(
@@ -1198,7 +1268,6 @@ async def _record_restore(
         "source": source,
         "status": status,
         "message": message[:2048] if message else "",
-        "created_at": datetime.now(timezone.utc).isoformat(),
     }
 
     try:

@@ -49,6 +49,81 @@ def _timestamp() -> str:
     return datetime.now(timezone.utc).strftime("%Y%m%d_%H%M%S")
 
 
+def _iter_sql_statements(sql: str) -> list[str]:
+    """Split SQL text into executable statements while skipping comment-only chunks."""
+    statements: list[str] = []
+    current: list[str] = []
+    in_single = False
+    in_double = False
+    in_line_comment = False
+    in_block_comment = False
+    i = 0
+    length = len(sql)
+
+    while i < length:
+        ch = sql[i]
+        nxt = sql[i + 1] if i + 1 < length else ""
+
+        if in_line_comment:
+            if ch == "\n":
+                in_line_comment = False
+                current.append(ch)
+            i += 1
+            continue
+
+        if in_block_comment:
+            if ch == "*" and nxt == "/":
+                in_block_comment = False
+                i += 2
+            else:
+                i += 1
+            continue
+
+        if not in_single and not in_double:
+            if ch == "-" and nxt == "-":
+                in_line_comment = True
+                i += 2
+                continue
+            if ch == "/" and nxt == "*":
+                in_block_comment = True
+                i += 2
+                continue
+
+        if ch == "'" and not in_double:
+            # Preserve escaped '' inside strings.
+            if in_single and nxt == "'":
+                current.extend([ch, nxt])
+                i += 2
+                continue
+            in_single = not in_single
+            current.append(ch)
+            i += 1
+            continue
+
+        if ch == '"' and not in_single:
+            in_double = not in_double
+            current.append(ch)
+            i += 1
+            continue
+
+        if ch == ";" and not in_single and not in_double:
+            stmt = "".join(current).strip()
+            if stmt:
+                statements.append(stmt)
+            current = []
+            i += 1
+            continue
+
+        current.append(ch)
+        i += 1
+
+    tail = "".join(current).strip()
+    if tail:
+        statements.append(tail)
+
+    return statements
+
+
 # ── MySQL ─────────────────────────────────────────────────────────────
 
 def _backup_mysql(
@@ -187,10 +262,19 @@ def _backup_postgresql(
 
         col_defs = []
         for col_name, data_type, char_max, nullable, default in columns:
-            col_def = f"  {col_name} {data_type}"
+            serial_type = None
+            if default and "nextval(" in str(default):
+                if data_type == "integer":
+                    serial_type = "serial"
+                elif data_type == "bigint":
+                    serial_type = "bigserial"
+                elif data_type == "smallint":
+                    serial_type = "smallserial"
+
+            col_def = f"  {col_name} {serial_type or data_type}"
             if char_max:
                 col_def += f"({char_max})"
-            if default is not None:
+            if default is not None and not serial_type:
                 col_def += f" DEFAULT {default}"
             if nullable == "NO":
                 col_def += " NOT NULL"
@@ -364,7 +448,7 @@ def _restore_mysql(
     )
     cur = conn.cursor()
     cur.execute("SET FOREIGN_KEY_CHECKS=0;")
-    statements = [s.strip() for s in sql.split(";") if s.strip()]
+    statements = _iter_sql_statements(sql)
     for stmt in statements:
         cur.execute(stmt)
     cur.execute("SET FOREIGN_KEY_CHECKS=1;")
@@ -392,7 +476,7 @@ def _restore_postgresql(
         password=password,
     )
     cur = conn.cursor()
-    statements = [s.strip() for s in sql.split(";") if s.strip()]
+    statements = _iter_sql_statements(sql)
     for stmt in statements:
         cur.execute(stmt)
     conn.commit()

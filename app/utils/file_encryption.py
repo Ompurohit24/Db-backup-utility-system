@@ -12,6 +12,7 @@ from typing import BinaryIO
 
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
 from cryptography.hazmat.backends import default_backend
+from cryptography.exceptions import InvalidTag
 
 CHUNK_SIZE = 1024 * 1024  # 1 MB chunks to limit memory usage
 NONCE_SIZE = 12
@@ -62,7 +63,12 @@ def _aes_gcm_decrypt_stream(in_file: BinaryIO, out_file: BinaryIO, key: bytes) -
         out_file.write(decryptor.update(ciphertext[offset:next_offset]))
         offset = next_offset
 
-    decryptor.finalize()
+    try:
+        decryptor.finalize()
+    except InvalidTag as exc:
+        raise ValueError(
+            "Authentication failed - file may be corrupted, or encryption key may be incorrect."
+        ) from exc
 
 
 def encrypt_file(source_path: Path, dest_path: Path, key: bytes) -> Path:
@@ -103,8 +109,10 @@ def decrypt_bytes(data: bytes, key: bytes) -> bytes:
 
     try:
         decryptor.finalize()
-    except Exception as e:
-        raise ValueError(f"Authentication tag verification failed: {str(e)}") from e
+    except InvalidTag as exc:
+        raise ValueError(
+            "Authentication failed - file may be corrupted, or encryption key may be incorrect."
+        ) from exc
     
     return b"".join(plaintext_chunks)
 
